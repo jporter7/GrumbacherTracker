@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee">
+
+  <!-- Servlets -->
+  <servlet>
+    <servlet-name>IndexServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.IndexServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>GrumbacherServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.GrumbacherServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>MultiplyNumbersServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.MultiplyNumbersServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>GuessingGameServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.GuessingGameServlet</servlet-class>
+  </servlet>
+ 
+   <servlet>
+    <servlet-name>WeightRoomServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.WeightRoomServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>AccountCreationServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.AccountCreationServlet</servlet-class>
+  </servlet>
+  
+  <!-- AJAX servlets. -->
+  <servlet>
+    <servlet-name>GrumbacherAjaxServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.ajax.GrumbacherAjaxServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>MultiplyNumbersAjaxServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.ajax.MultiplyNumbersAjaxServlet</servlet-class>
+  </servlet>  
+  
+  <servlet>
+    <servlet-name>NextGuessAjaxServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.ajax.NextGuessAjaxServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>WeightRoomAjaxServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.ajax.WeightRoomAjaxServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>AccountCreationAjaxServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.ajax.AccountCreationAjaxServlet</servlet-class>
+  </servlet>
+
+  <!-- Servlet mappings -->
+  <servlet-mapping>
+    <servlet-name>IndexServlet</servlet-name>
+    <url-pattern>/index</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GrumbacherServlet</servlet-name>
+    <url-pattern>/grumbacher</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>MultiplyNumbersServlet</servlet-name>
+    <url-pattern>/multiplyNumbers</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>GuessingGameServlet</servlet-name>
+    <url-pattern>/guessingGame</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>WeightRoomServlet</servlet-name>
+    <url-pattern>/weightRoom</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>AccountCreationServlet</servlet-name>
+    <url-pattern>/accountCreation</url-pattern>
+  </servlet-mapping>
+  
+  <!--  AJAX servlet mappings. -->
+  <servlet-mapping>
+    <servlet-name>GrumbacherAjaxServlet</servlet-name>
+    <url-pattern>/ajax/grumbacher</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>MultiplyNumbersAjaxServlet</servlet-name>
+    <url-pattern>/ajax/multiplyNumbers</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>NextGuessAjaxServlet</servlet-name>
+    <url-pattern>/ajax/nextGuess</url-pattern>
+  </servlet-mapping>
+
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  
+  <servlet-mapping>
+    <servlet-name>WeightRoomAjaxServlet</servlet-name>
+    <url-pattern>/ajax/weightRoom</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>AccountCreationAjaxServlet</servlet-name>
+    <url-pattern>/ajax/accountCreation</url-pattern>
+  </servlet-mapping>
+  
+</web-app>
