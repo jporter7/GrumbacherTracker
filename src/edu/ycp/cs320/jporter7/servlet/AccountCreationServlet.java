@@ -24,7 +24,6 @@ public class AccountCreationServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		// Decode form parameters and dispatch to controller
-		
 		String errorMessage = null;
 		try 
 		{

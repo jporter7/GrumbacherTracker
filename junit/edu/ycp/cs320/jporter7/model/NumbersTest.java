@@ -35,17 +35,6 @@ public class NumbersTest
 		assertTrue(5123.8 == model.getThird());
 	}
 	
-	/*public void testGetAddResult()
-	{
-		Double result = model.getAddResult(10.0, 5.0, 20.0);
-		assertTrue(35.0 == result);
-	}
-	
-	public void testGetMultiplyResult()
-	{
-		Double result = model.getMultiplyResult(10.0, 5.0);
-		assertTrue(50.0 == result);
-	}*/
 	
 
 }

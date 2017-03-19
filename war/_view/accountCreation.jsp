@@ -23,11 +23,11 @@
 					<td class="label">Email:</td>
 					<td><input type="text" name="email" size="12" value="${model.third}" /></td>
 				</tr>
-				<tr>
+			</table>
+			<tr>
 					<input type="Submit" name="Create Account" value="Create Account!">
 					<td>${model.result}</td>
-				</tr>
-			</table>
+			</tr>
 		</form>
 		
 	</body>
