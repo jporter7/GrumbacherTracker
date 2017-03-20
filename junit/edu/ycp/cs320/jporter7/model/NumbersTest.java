@@ -23,12 +23,14 @@ public class NumbersTest
 		assertTrue(10.0 == model.getFirst());
 	}
 	
+	@Test
 	public void testSetSecond() 
 	{
 		model.setSecond(5.4);
 		assertTrue(5.4 == model.getSecond());
 	}
 	
+	@Test
 	public void testSetThird() 
 	{
 		model.setThird(5123.8);

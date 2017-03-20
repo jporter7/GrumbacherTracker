@@ -1,5 +1,6 @@
 package edu.ycp.cs320.jporter7.model;
 
+
 public class PopulationCounter 
 {
 	private int popTotal, pool, racquet, wolfBasketball, weightRoom, fieldHouse,

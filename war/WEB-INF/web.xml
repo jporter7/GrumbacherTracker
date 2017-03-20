@@ -35,6 +35,16 @@
     <servlet-class>edu.ycp.cs320.jporter7.servlet.AccountCreationServlet</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>ReservationsServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.ReservationsServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>LoginServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.LoginServlet</servlet-class>
+  </servlet>
+  
   <!-- AJAX servlets. -->
   <servlet>
     <servlet-name>GrumbacherAjaxServlet</servlet-name>
@@ -59,6 +69,16 @@
   <servlet>
     <servlet-name>AccountCreationAjaxServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.jporter7.servlet.ajax.AccountCreationAjaxServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>ReservationsAjaxServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.ajax.ReservationsAjaxServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>LoginAjaxServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.ajax.LoginAjaxServlet</servlet-class>
   </servlet>
 
   <!-- Servlet mappings -->
@@ -91,6 +111,16 @@
     <url-pattern>/accountCreation</url-pattern>
   </servlet-mapping>
   
+  <servlet-mapping>
+    <servlet-name>ReservationsServlet</servlet-name>
+    <url-pattern>/reservations</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>LoginServlet</servlet-name>
+    <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  
   <!--  AJAX servlet mappings. -->
   <servlet-mapping>
     <servlet-name>GrumbacherAjaxServlet</servlet-name>
@@ -119,6 +149,16 @@
   <servlet-mapping>
     <servlet-name>AccountCreationAjaxServlet</servlet-name>
     <url-pattern>/ajax/accountCreation</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>ReservationsAjaxServlet</servlet-name>
+    <url-pattern>/ajax/reservations</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>LoginAjaxServlet</servlet-name>
+    <url-pattern>/ajax/login</url-pattern>
   </servlet-mapping>
   
 </web-app>
