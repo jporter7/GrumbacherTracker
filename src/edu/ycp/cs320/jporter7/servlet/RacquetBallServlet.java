@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import edu.ycp.cs320.jporter7.controller.NumbersController;
 import edu.ycp.cs320.jporter7.model.Numbers;
 
-public class MultiplyNumbersServlet extends HttpServlet
+public class RacquetBallServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 

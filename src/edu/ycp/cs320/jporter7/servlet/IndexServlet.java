@@ -15,8 +15,6 @@ public class IndexServlet extends HttpServlet {
 			throws ServletException, IOException 
 	{
 		
-		System.out.println("In the Index servlet");
-		
 		req.getRequestDispatcher("/_view/index.jsp").forward(req, resp);
 		
 	}
@@ -28,21 +26,17 @@ public class IndexServlet extends HttpServlet {
 	{
 		if (req.getParameter("Grumbacher") != null)
 		{
-			resp.sendRedirect(req.getContextPath() + "/grumbacher");
-		}
-		else if (req.getParameter("GuessingGame") != null)
-		{
-			resp.sendRedirect(req.getContextPath() + "/guessingGame");
-		}
-		else if (req.getParameter("MultiplyNumbers") != null)
-		{
-			resp.sendRedirect(req.getContextPath() + "/multiplyNumbers");
+			resp.sendRedirect(req.getContextPath() + "/reservations");
 		}
 		else if (req.getParameter("WeightRoom") != null)
 		{
-			resp.sendRedirect(req.getContextPath() + "/weightRoom");
+			resp.sendRedirect(req.getContextPath() + "/reservations");
 		}
 		else if (req.getParameter("Reservations") != null)
+		{
+			resp.sendRedirect(req.getContextPath() + "/reservations");
+		}
+		else if (req.getParameter("RacquetBall") != null)
 		{
 			resp.sendRedirect(req.getContextPath() + "/reservations");
 		}

@@ -12,7 +12,7 @@ public class UserTest
 	@Before
 	public void setUp()
 	{
-		//studentUser = new User();
+		studentUser = new User("YCPnet2005", "jporter7", "jporter7@ycp.edu", "Jason", "Porter" );
 		//facultyUser = new User();
 	}
 	
@@ -23,13 +23,41 @@ public class UserTest
 	}
 	
 	@Test
-	public void testCreateUser() 
+	public void testGetPassword() 
+	{
+		//fail("Not yet implemented");
+		assertEquals("YCPnet2005", studentUser.getPassword());
+	}
+	
+	@Test
+	public void testGetUserName() 
+	{
+		//fail("Not yet implemented");
+		assertEquals("jporter7", studentUser.getUserName());
+	}
+	
+	@Test
+	public void testGetFullName() 
+	{
+		//fail("Not yet implemented");
+		assertEquals("Jason Porter", studentUser.getFullName());
+	}
+	
+	@Test
+	public void testGetEmail() 
+	{
+		//fail("Not yet implemented");
+		assertEquals("jporter7@ycp.edu", studentUser.getEmail());
+	}
+	
+	@Test
+	public void testDeleteUser() 
 	{
 		fail("Not yet implemented");
 	}
 	
 	@Test
-	public void testDeleteUser() 
+	public void testCreateUser() 
 	{
 		fail("Not yet implemented");
 	}
