@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class WeightRoomServlet extends HttpServlet 
 {
@@ -16,8 +17,18 @@ public class WeightRoomServlet extends HttpServlet
 			throws ServletException, IOException 
 	{
 		
-		System.out.println("In the WeightRoom servlet");
-		req.getRequestDispatcher("/_view/weightRoom.jsp").forward(req, resp);
+		Object username = req.getSession().getAttribute("username");
+		Object password = req.getSession().getAttribute("password");
+		HttpSession session= req.getSession(false); 
+		if (username == null || username.equals("") || password == null || password.equals(""))
+		{
+			System.out.println("Need to login");
+			resp.sendRedirect(req.getContextPath() + "/login");
+		}
+		else
+		{
+			req.getRequestDispatcher("/_view/weightRoom.jsp").forward(req, resp);
+		}
 		
 	}
 	

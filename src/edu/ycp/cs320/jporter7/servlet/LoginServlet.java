@@ -6,31 +6,63 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import edu.ycp.cs320.jporter7.model.User;
 
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
  
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
+			throws ServletException, IOException 
+	{
 		req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
+		
+		//HttpSession session = req.getSession();  
+        //session.setAttribute("username", req.getParameter("username"));
 	}
 	
+	@SuppressWarnings("unused")
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException
 	{
-		if (req.getParameter("index") != null)
-		{
-			resp.sendRedirect(req.getContextPath() + "/index");
-		}
-		else if (req.getParameter("Create Account") != null)
+		if (req.getParameter("Create Account") != null)
 		{
 			resp.sendRedirect(req.getContextPath() + "/accountCreation");
 		}
-		else
+		
+		
+		String errorMessage = null;
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		boolean validCredentials = false;
+		//HttpSession session = req.getSession();
+		
+		
+		if (username == null || username.equals("") || password == null || password.equals("")) 
 		{
-			throw new ServletException("Unknown Command");
+		    errorMessage = "Please specify username and password";
+		    System.out.println("invalid credentials");
+		} 
+		else 
+		{
+			req.getSession().setAttribute("username", username);
+			req.getSession().setAttribute("password", password);
+			validCredentials = true;
+			System.out.println("valid credentials");
+		}
+		
+		
+		if (req.getParameter("index") != null && validCredentials)
+		{
+			resp.sendRedirect(req.getContextPath() + "/index");
+		}
+		else if (req.getParameter("index") != null && !validCredentials)
+		{
+			//throw new ServletException("Unknown Command");
+			resp.sendRedirect(req.getContextPath() + "/login");
 		}
 		
 	}

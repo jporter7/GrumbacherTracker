@@ -12,14 +12,35 @@ public class UserTest
 	@Before
 	public void setUp()
 	{
-		studentUser = new User("YCPnet2005", "jporter7", "jporter7@ycp.edu", "Jason", "Porter" );
-		//facultyUser = new User();
+		studentUser = new User();
+		facultyUser = new User();
+		
+		//set student user attributes
+		studentUser.setEmail("jporter7@ycp.edu");
+		studentUser.setPassword("YCPnet2005");
+		studentUser.setUserName("jporter7");
+		studentUser.setfirstName("Jason");
+		studentUser.setlastName("Porter");
+		studentUser.setId(903156845);
+		studentUser.setIsFaculty(false);
+		
+		//set faculty user attributes
+		facultyUser.setEmail("jsmith@ycp.edu");
+		facultyUser.setPassword("YCP&&2005");
+		facultyUser.setUserName("jsmith");
+		facultyUser.setfirstName("John");
+		facultyUser.setlastName("Smith");
+		facultyUser.setId(902000000);
+		facultyUser.setIsFaculty(true);
+		
 	}
 	
 	@Test
 	public void testisFaculty() 
 	{
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
+		assertFalse(studentUser.getIsFaculty());
+		assertTrue(facultyUser.getIsFaculty());
 	}
 	
 	@Test
@@ -27,6 +48,7 @@ public class UserTest
 	{
 		//fail("Not yet implemented");
 		assertEquals("YCPnet2005", studentUser.getPassword());
+		assertEquals("YCP&&2005", facultyUser.getPassword());
 	}
 	
 	@Test
@@ -34,6 +56,7 @@ public class UserTest
 	{
 		//fail("Not yet implemented");
 		assertEquals("jporter7", studentUser.getUserName());
+		assertEquals("jsmith", facultyUser.getUserName());
 	}
 	
 	@Test
@@ -41,6 +64,7 @@ public class UserTest
 	{
 		//fail("Not yet implemented");
 		assertEquals("Jason Porter", studentUser.getFullName());
+		assertEquals("John Smith", facultyUser.getFullName());
 	}
 	
 	@Test
@@ -48,18 +72,15 @@ public class UserTest
 	{
 		//fail("Not yet implemented");
 		assertEquals("jporter7@ycp.edu", studentUser.getEmail());
+		assertEquals("jsmith@ycp.edu", facultyUser.getEmail());
 	}
 	
 	@Test
-	public void testDeleteUser() 
+	public void testGetId() 
 	{
-		fail("Not yet implemented");
-	}
-	
-	@Test
-	public void testCreateUser() 
-	{
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
+		assertEquals(903156845, studentUser.getId());
+		assertEquals(902000000, facultyUser.getId());
 	}
 	
 }

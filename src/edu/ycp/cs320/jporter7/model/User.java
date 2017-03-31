@@ -3,15 +3,51 @@ package edu.ycp.cs320.jporter7.model;
 public class User 
 {
 	private String password, userName, email, firstName, lastName;
+	private int id;
+	private boolean isFaculty;
 	
-	public User(String password, String userName, String email, String firstName, String lastName)
+	public User()
+	{
+
+	}
+	
+	/////////////////////////////////////////////////
+	public void setPassword(String password)
 	{
 		this.password = password;
+	}
+	
+	public void setUserName(String userName)
+	{
 		this.userName = userName;
+	}
+	
+	public void setEmail(String email)
+	{
 		this.email = email;
+	}
+	
+	public void setfirstName(String firstName)
+	{
 		this.firstName = firstName;
+	}
+	
+	public void setlastName(String lastName)
+	{
 		this.lastName = lastName;
 	}
+	
+	public void setId(int id)
+	{
+		this.id = id;
+	}
+	
+	public void setIsFaculty(boolean isFaculty)
+	{
+		this.isFaculty = isFaculty;
+	}
+	
+	////////////////////////////////////////////////
 	
 	public String getPassword()
 	{
@@ -43,9 +79,14 @@ public class User
 		return firstName + " " + lastName;
 	}
 	
-	public boolean isFaculty()
+	public int getId()
 	{
-		return false;
+		return id;
+	}
+	
+	public boolean getIsFaculty()
+	{
+		return isFaculty;
 	}
 	
 	

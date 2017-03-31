@@ -37,6 +37,5 @@ public class NumbersTest
 		assertTrue(5123.8 == model.getThird());
 	}
 	
-	
 
 }
