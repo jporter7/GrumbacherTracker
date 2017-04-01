@@ -2,7 +2,7 @@ package edu.ycp.cs320.jporter7.populationdb.model;
 
 public class Book {
 	private int    bookId;
-	private int    authorId;
+	private int    userId;
 	private String title;
 	private String isbn;
 	private int    published;
@@ -19,12 +19,12 @@ public class Book {
 		return bookId;
 	}
 	
-	public void setAuthorId(int authorId) {
-		this.authorId = authorId;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	
-	public int getAuthorId() {
-		return authorId;
+	public int getUserId() {
+		return userId;
 	}
 	
 	public void setTitle(String title) {

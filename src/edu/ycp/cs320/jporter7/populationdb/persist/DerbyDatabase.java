@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import edu.ycp.cs320.jporter7.populationdb.model.Author;
+import edu.ycp.cs320.jporter7.controller.UserController;
+import edu.ycp.cs320.jporter7.model.User;
 import edu.ycp.cs320.jporter7.populationdb.model.Book;
 import edu.ycp.cs320.jporter7.populationdb.model.Pair;
 import edu.ycp.cs320.jporter7.sqldemo.DBUtil;
@@ -38,28 +39,28 @@ public class DerbyDatabase implements IDatabase
 	private static final int MAX_ATTEMPTS = 10;
 
 	@Override
-	public List<Pair<Author, Book>> findAuthorAndBookByTitle(final String title) 
+	public List<Pair<User, Book>> findUserAndBookByTitle(final String title) 
 	{
-		return executeTransaction(new Transaction<List<Pair<Author,Book>>>() 
+		return executeTransaction(new Transaction<List<Pair<User,Book>>>() 
 		{
 			@Override
-			public List<Pair<Author, Book>> execute(Connection conn) throws SQLException 
+			public List<Pair<User, Book>> execute(Connection conn) throws SQLException 
 			{
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
 				
 				try 
 				{
-					// retreive all attributes from both Books and Authors tables
+					// retreive all attributes from both Books and Users tables
 					stmt = conn.prepareStatement(
-							"select authors.*, books.* " +
-							"  from authors, books " +
-							" where authors.author_id = books.author_id " +
+							"select users.*, books.* " +
+							"  from users, books " +
+							" where users.user_id = books.user_id " +
 							"   and books.title = ?"
 					);
 					stmt.setString(1, title);
 					
-					List<Pair<Author, Book>> result = new ArrayList<Pair<Author,Book>>();
+					List<Pair<User, Book>> result = new ArrayList<Pair<User,Book>>();
 					
 					resultSet = stmt.executeQuery();
 					
@@ -70,17 +71,17 @@ public class DerbyDatabase implements IDatabase
 					{
 						found = true;
 						
-						// create new Author object
+						// create new User object
 						// retrieve attributes from resultSet starting with index 1
-						Author author = new Author();
-						loadAuthor(author, resultSet, 1);
+						User user = new User();
+						loadUser(user, resultSet, 1);
 						
 						// create new Book object
 						// retrieve attributes from resultSet starting at index 4
 						Book book = new Book();
 						loadBook(book, resultSet, 4);
 						
-						result.add(new Pair<Author, Book>(author, book));
+						result.add(new Pair<User, Book>(user, book));
 					}
 					
 					// check if the title was found
@@ -170,17 +171,20 @@ public class DerbyDatabase implements IDatabase
 		return conn;
 	}
 	
-	private void loadAuthor(Author author, ResultSet resultSet, int index) throws SQLException 
+	private void loadUser(User user, ResultSet resultSet, int index) throws SQLException 
 	{
-		author.setAuthorId(resultSet.getInt(index++));
-		author.setLastname(resultSet.getString(index++));
-		author.setFirstname(resultSet.getString(index++));
+		UserController controller = new UserController(user);
+		controller.createUser(resultSet.getString(index++), resultSet.getString(index++), resultSet.getString(index++),
+				resultSet.getString(index++), resultSet.getString(index++), resultSet.getInt(index++));
+		/*user.setUserId(resultSet.getInt(index++));
+		user.setLastname(resultSet.getString(index++));
+		user.setFirstname(resultSet.getString(index++));*/
 	}
 	
 	private void loadBook(Book book, ResultSet resultSet, int index) throws SQLException 
 	{
 		book.setBookId(resultSet.getInt(index++));
-		book.setAuthorId(resultSet.getInt(index++));
+		book.setUserId(resultSet.getInt(index++));
 		book.setTitle(resultSet.getString(index++));
 		book.setIsbn(resultSet.getString(index++));
 		book.setPublished(resultSet.getInt(index++));		
@@ -199,8 +203,8 @@ public class DerbyDatabase implements IDatabase
 				try 
 				{
 					stmt1 = conn.prepareStatement(
-						"create table authors (" +
-						"	author_id integer primary key " +
+						"create table users (" +
+						"	user_id integer primary key " +
 						"		generated always as identity (start with 1, increment by 1), " +									
 						"	lastname varchar(40)," +
 						"	firstname varchar(40)" +
@@ -212,7 +216,7 @@ public class DerbyDatabase implements IDatabase
 							"create table books (" +
 							"	book_id integer primary key " +
 							"		generated always as identity (start with 1, increment by 1), " +
-							"	author_id integer constraint author_id references authors, " +
+							"	user_id integer constraint user_id references users, " +
 							"	title varchar(70)," +
 							"	isbn varchar(15)," +
 							"   published integer " +
@@ -235,36 +239,36 @@ public class DerbyDatabase implements IDatabase
 		executeTransaction(new Transaction<Boolean>() {
 			@Override
 			public Boolean execute(Connection conn) throws SQLException {
-				List<Author> authorList;
+				List<User> userList;
 				List<Book> bookList;
 				
 				try {
-					authorList = InitialData.getAuthors();
+					userList = InitialData.getUsers();
 					bookList = InitialData.getBooks();
 				} catch (IOException e) {
 					throw new SQLException("Couldn't read initial data", e);
 				}
 
-				PreparedStatement insertAuthor = null;
+				PreparedStatement insertUser = null;
 				PreparedStatement insertBook   = null;
 
 				try {
-					// populate authors table (do authors first, since author_id is foreign key in books table)
-					insertAuthor = conn.prepareStatement("insert into authors (lastname, firstname) values (?, ?)");
-					for (Author author : authorList) {
-//						insertAuthor.setInt(1, author.getAuthorId());	// auto-generated primary key, don't insert this
-						insertAuthor.setString(1, author.getLastname());
-						insertAuthor.setString(2, author.getFirstname());
-						insertAuthor.addBatch();
+					// populate users table (do users first, since user_id is foreign key in books table)
+					insertUser = conn.prepareStatement("insert into users (lastname, firstname) values (?, ?)");
+					for (User user : userList) {
+//						insertUser.setInt(1, user.getUserId());	// auto-generated primary key, don't insert this
+						insertUser.setString(1, user.getLastName());
+						insertUser.setString(2, user.getFirstName());
+						insertUser.addBatch();
 					}
-					insertAuthor.executeBatch();
+					insertUser.executeBatch();
 					
-					// populate books table (do this after authors table,
-					// since author_id must exist in authors table before inserting book)
-					insertBook = conn.prepareStatement("insert into books (author_id, title, isbn, published) values (?, ?, ?, ?)");
+					// populate books table (do this after users table,
+					// since user_id must exist in users table before inserting book)
+					insertBook = conn.prepareStatement("insert into books (user_id, title, isbn, published) values (?, ?, ?, ?)");
 					for (Book book : bookList) {
 //						insertBook.setInt(1, book.getBookId());		// auto-generated primary key, don't insert this
-						insertBook.setInt(1, book.getAuthorId());
+						insertBook.setInt(1, book.getUserId());
 						insertBook.setString(2, book.getTitle());
 						insertBook.setString(3, book.getIsbn());
 						insertBook.setInt(4,  book.getPublished());
@@ -275,7 +279,7 @@ public class DerbyDatabase implements IDatabase
 					return true;
 				} finally {
 					DBUtil.closeQuietly(insertBook);
-					DBUtil.closeQuietly(insertAuthor);
+					DBUtil.closeQuietly(insertUser);
 				}
 			}
 		});
@@ -293,12 +297,12 @@ public class DerbyDatabase implements IDatabase
 		System.out.println("Success!");
 	}
 	
-	public List<Pair<Author, Book>> findAuthorAndBookByAuthorLastName(String lastName)
+	public ArrayList<User> findUserByLastName(String lastName)
 	{
-		return executeTransaction(new Transaction<List<Pair<Author,Book>>>() 
+		return executeTransaction(new Transaction<ArrayList<User>>() 
 		{
 			@Override
-			public List<Pair<Author, Book>> execute(Connection conn) throws SQLException 
+			public ArrayList<User> execute(Connection conn) throws SQLException 
 			{
 				PreparedStatement stmt = null;
 				ResultSet resultSet = null;
@@ -308,13 +312,13 @@ public class DerbyDatabase implements IDatabase
 				try 
 				{
 					
-					// a canned query to find book information (including author name) from title
+					// a canned query to find book information (including user name) from title
 					//add order by statement and change ? position and change return values
 					stmt = conn.prepareStatement(
-							"select authors.*, books.* "
-							+ "  from authors, books "
-							+ "  where authors.author_id = books.author_id "
-							+ "        and authors.lastname = ?"
+							"select users.*, books.* "
+							+ "  from users, books "
+							+ "  where users.user_id = books.user_id "
+							+ "        and users.lastname = ?"
 							+ "  order by books.title"
 					);
 					
@@ -323,7 +327,7 @@ public class DerbyDatabase implements IDatabase
 					//change title variable to last name
 					stmt.setString(1, lastName);
 
-					List<Pair<Author, Book>> result = new ArrayList<Pair<Author,Book>>();
+					ArrayList<User> result = new ArrayList<User>();
 					
 					// execute the query
 					resultSet = stmt.executeQuery();
@@ -334,23 +338,23 @@ public class DerbyDatabase implements IDatabase
 					{
 						found = true;
 						
-						// create new Author object
+						// create new User object
 						// retrieve attributes from resultSet starting with index 1
-						Author author = new Author();
-						loadAuthor(author, resultSet, 1);
+						User user = new User();
+						loadUser(user, resultSet, 1);
 						
 						// create new Book object
 						// retrieve attributes from resultSet starting at index 4
 						Book book = new Book();
 						loadBook(book, resultSet, 4);
 						
-						result.add(new Pair<Author, Book>(author, book));
+						result.add(user);
 					}
 					
 					// check if the title was found
 					if (!found) 
 					{
-						System.out.println("<" + lastName + "> was not found in the authors table");
+						System.out.println("<" + lastName + "> was not found in the users table");
 					}
 					
 					return result;
@@ -366,13 +370,13 @@ public class DerbyDatabase implements IDatabase
 		});
 	}
 	
-	public List<Pair<Author, Book>> insertBook(String firstName, String lastName, String title, String isbn, String published)
+	public List<Pair<User, Book>> insertBook(String firstName, String lastName, String title, String isbn, String published)
 	{
-		return executeTransaction(new Transaction<List<Pair<Author,Book>>>() 
+		return executeTransaction(new Transaction<List<Pair<User,Book>>>() 
 		{
 			@SuppressWarnings("resource")
 			@Override
-			public List<Pair<Author, Book>> execute(Connection conn) throws SQLException 
+			public List<Pair<User, Book>> execute(Connection conn) throws SQLException 
 			{
 				PreparedStatement stmt = null;
 				PreparedStatement stmt2 = null;
@@ -382,9 +386,9 @@ public class DerbyDatabase implements IDatabase
 				try 
 				{
 					stmt = conn.prepareStatement(
-							"select authors.author_id "
-							+ "  from authors "
-							+ "  where authors.firstname = ? and authors.lastname = ?"		
+							"select users.user_id "
+							+ "  from users "
+							+ "  where users.firstname = ? and users.lastname = ?"		
 					);
 					
 					//set variables equal to question marks and execute the query
@@ -392,13 +396,13 @@ public class DerbyDatabase implements IDatabase
 					stmt.setString(2, lastName);
 					resultSet = stmt.executeQuery();
 					
-					//if the author was already in the the table, run this block
+					//if the user was already in the the table, run this block
 					if (resultSet.next())
 					{
-						//set object to author id and create statement to add author's new book
+						//set object to user id and create statement to add user's new book
 						Object obj = resultSet.getString(1);
 						stmt2 = conn.prepareStatement(
-								"insert into books (author_id, title, isbn, published) "
+								"insert into books (user_id, title, isbn, published) "
 								+ "  values (?, ?, ?, ?)"
 						);			
 						
@@ -412,12 +416,12 @@ public class DerbyDatabase implements IDatabase
 						// execute the update
 						stmt2.executeUpdate();
 					}
-					//if the author was not in the books table, run this block
+					//if the user was not in the books table, run this block
 					else
 					{
-						//create statement to insert new author into author's table
+						//create statement to insert new user into user's table
 						stmt3 = conn.prepareStatement(
-								"insert into authors (lastname, firstname)"
+								"insert into users (lastname, firstname)"
 								+ "  values (?, ?)"
 										
 						);
@@ -428,24 +432,24 @@ public class DerbyDatabase implements IDatabase
 						stmt3.executeUpdate();
 						
 						
-						//create new statement to get new author's id
+						//create new statement to get new user's id
 						stmt = conn.prepareStatement(
-								"select authors.author_id "
-								+ "  from authors "
-								+ "  where authors.firstname = ? and authors.lastname = ?"		
+								"select users.user_id "
+								+ "  from users "
+								+ "  where users.firstname = ? and users.lastname = ?"		
 						);
 						
-						//set variables equal to question marks and set resultSet equal to author's id
+						//set variables equal to question marks and set resultSet equal to user's id
 						stmt.setString(1, firstName);
 						stmt.setString(2, lastName);
 						resultSet = stmt.executeQuery();
-						System.out.println("Author added");
+						System.out.println("User added");
 						
-						//move cursor and create statement to add author's new book into books
+						//move cursor and create statement to add user's new book into books
 						resultSet.next();
 						Object obj = resultSet.getString(1);
 						stmt2 = conn.prepareStatement(
-								"insert into books (author_id, title, isbn, published) "
+								"insert into books (user_id, title, isbn, published) "
 								+ "  values (?, ?, ?, ?)"
 						);			
 						
@@ -459,22 +463,22 @@ public class DerbyDatabase implements IDatabase
 						// execute the update
 						stmt2.executeUpdate();
 					}
-					List<Pair<Author, Book>> result = new ArrayList<Pair<Author,Book>>();
+					List<Pair<User, Book>> result = new ArrayList<Pair<User,Book>>();
 					
 					
 					while (resultSet.next()) 
 					{	
-						// create new Author object
+						// create new User object
 						// retrieve attributes from resultSet starting with index 1
-						Author author = new Author();
-						loadAuthor(author, resultSet, 1);
+						User user = new User();
+						loadUser(user, resultSet, 1);
 						
 						// create new Book object
 						// retrieve attributes from resultSet starting at index 4
 						Book book = new Book();
 						loadBook(book, resultSet, 4);
 						
-						result.add(new Pair<Author, Book>(author, book));
+						result.add(new Pair<User, Book>(user, book));
 					}
 				
 					return result;

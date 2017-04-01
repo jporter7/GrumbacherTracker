@@ -5,31 +5,35 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.ycp.cs320.jporter7.controller.UserController;
+import edu.ycp.cs320.jporter7.model.User;
 import edu.ycp.cs320.jporter7.populationdb.model.Author;
 import edu.ycp.cs320.jporter7.populationdb.model.Book;
 
 public class InitialData {
-	public static List<Author> getAuthors() throws IOException {
-		List<Author> authorList = new ArrayList<Author>();
-		ReadCSV readAuthors = new ReadCSV("authors.csv");
-		try {
+	public static List<User> getUsers() throws IOException {
+		List<User> userList = new ArrayList<User>();
+		ReadCSV readUsers = new ReadCSV("users.csv");
+		try 
+		{
 			// auto-generated primary key for authors table
-			Integer authorId = 1;
-			while (true) {
-				List<String> tuple = readAuthors.next();
-				if (tuple == null) {
+			Integer userId = 1;
+			while (true) 
+			{
+				List<String> tuple = readUsers.next();
+				if (tuple == null) 
+				{
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
-				Author author = new Author();
-				author.setAuthorId(authorId++);				
-				author.setLastname(i.next());
-				author.setFirstname(i.next());
-				authorList.add(author);
+				User user = new User();
+				UserController controller = new UserController(user);
+				controller.createUser(i.next(), i.next(), i.next(), i.next(), i.next(), Integer.parseInt(i.next()));
+				userList.add(user);
 			}
-			return authorList;
+			return userList;
 		} finally {
-			readAuthors.close();
+			readUsers.close();
 		}
 	}
 	
@@ -47,7 +51,7 @@ public class InitialData {
 				Iterator<String> i = tuple.iterator();
 				Book book = new Book();
 				book.setBookId(bookId++);
-				book.setAuthorId(Integer.parseInt(i.next()));
+				book.setUserId(Integer.parseInt(i.next()));
 				book.setTitle(i.next());
 				book.setIsbn(i.next());
 				book.setPublished(Integer.parseInt(i.next()));
