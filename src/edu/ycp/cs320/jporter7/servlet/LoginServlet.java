@@ -1,6 +1,7 @@
 package edu.ycp.cs320.jporter7.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +11,8 @@ import javax.servlet.http.HttpSession;
 
 import edu.ycp.cs320.jporter7.model.User;
 
-public class LoginServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet 
+{
 	private static final long serialVersionUID = 1L;
  
 	@Override
@@ -19,8 +21,7 @@ public class LoginServlet extends HttpServlet {
 	{
 		req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		
-		//HttpSession session = req.getSession();  
-        //session.setAttribute("username", req.getParameter("username"));
+		ArrayList<User> userList = new ArrayList<>();
 	}
 	
 	@SuppressWarnings("unused")
@@ -50,8 +51,13 @@ public class LoginServlet extends HttpServlet {
 		{
 			req.getSession().setAttribute("username", username);
 			req.getSession().setAttribute("password", password);
-			validCredentials = true;
-			System.out.println("valid credentials");
+			if (username.equals("jporter") && password.equals("admin"))
+			{
+				validCredentials = true;
+				System.out.println("valid credentials");
+			}
+			//validCredentials = true;
+			
 		}
 		
 		
