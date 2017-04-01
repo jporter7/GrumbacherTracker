@@ -21,14 +21,14 @@ public class LoginServlet extends HttpServlet
 	{
 		req.getRequestDispatcher("/_view/login.jsp").forward(req, resp);
 		
-		ArrayList<User> userList = new ArrayList<>();
 	}
 	
 	@SuppressWarnings("unused")
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException
-	{
+	{	
+		
 		if (req.getParameter("Create Account") != null)
 		{
 			resp.sendRedirect(req.getContextPath() + "/accountCreation");
@@ -39,13 +39,12 @@ public class LoginServlet extends HttpServlet
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
 		boolean validCredentials = false;
-		//HttpSession session = req.getSession();
 		
 		
 		if (username == null || username.equals("") || password == null || password.equals("")) 
 		{
 		    errorMessage = "Please specify username and password";
-		    System.out.println("invalid credentials");
+		    System.out.println("null credentials");
 		} 
 		else 
 		{
@@ -56,7 +55,6 @@ public class LoginServlet extends HttpServlet
 				validCredentials = true;
 				System.out.println("valid credentials");
 			}
-			//validCredentials = true;
 			
 		}
 		

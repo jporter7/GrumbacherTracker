@@ -46,6 +46,10 @@ public class UserController
 			user.setId(id);
 			user.setIsFaculty(false);
 		}
+		else
+		{
+			user.setId(0);
+		}
 		
 		
 		return user;

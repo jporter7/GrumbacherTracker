@@ -28,10 +28,6 @@ public class NumbersControllerTest
 		model.setSecond(20.2);
 		model.setThird(15.5);
 		
-		//Double first = model.getFirst();
-		//Double second = model.getSecond();
-		//Double third = model.getThird();
-		
 		controller.add();
 		
 		assertTrue(model.getAddResult() == 46.6);
@@ -42,9 +38,6 @@ public class NumbersControllerTest
 	{
 		model.setFirst(10.0);
 		model.setSecond(20.2);
-		
-		//Double first = model.getFirst();
-		//Double second = model.getSecond();
 		
 		controller.multiply();
 		

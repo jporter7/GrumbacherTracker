@@ -64,12 +64,12 @@ public class User
 		return email;
 	}
 	
-	public String getfirstName()
+	public String getFirstName()
 	{
 		return firstName;
 	}
 	
-	public String getlastName()
+	public String getLastName()
 	{
 		return lastName;
 	}
