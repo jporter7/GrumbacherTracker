@@ -4,14 +4,23 @@
 
 <html>
 <head>
+<title>YCP Grumbacher Tracker</title>
+<style type = "text/css">
 <link rel="stylesheet" type="text/css" href="Resume_CSS.css">
+.error {
+			color: red;
+		}
 
-     
+</style>
 </head>
 <body>
+
+<c:if test="${! empty errorMessage}">
+	<div class="error">${errorMessage}</div>
+</c:if>
     
 <div>
-    <h2>Ycp Grumbacher Facility</h2> 
+    <h2>YCP Grumbacher Facility</h2> 
     
     <div>
    This is the login page

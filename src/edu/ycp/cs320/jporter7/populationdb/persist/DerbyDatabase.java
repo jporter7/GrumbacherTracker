@@ -370,6 +370,11 @@ public class DerbyDatabase implements IDatabase
 		});
 	}
 	
+	public ArrayList<User> getAllUsers()
+	{
+		throw new UnsupportedOperationException();
+	}
+	
 	public List<Pair<User, Book>> insertBook(String firstName, String lastName, String title, String isbn, String published)
 	{
 		return executeTransaction(new Transaction<List<Pair<User,Book>>>() 

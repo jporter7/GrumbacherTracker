@@ -75,6 +75,19 @@ public class FakeDatabase implements IDatabase {
 		return resultList;
 	}
 	
+	public ArrayList<User> getAllUsers()
+	{
+		ArrayList<User> resultList = new ArrayList<User>();
+		
+		//iterate through the entire userList
+		for (User user : userList)
+		{
+			resultList.add(user);
+		}
+		
+		return resultList;
+	}
+	
 	public List<Pair<User, Book>> insertBook(String firstName, String lastName, String title, String isbn, String published)
 	{
 		//throw new UnsupportedOperationException();

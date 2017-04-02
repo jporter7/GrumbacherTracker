@@ -13,4 +13,5 @@ public interface IDatabase
 	public List<Pair<User, Book>> findUserAndBookByTitle(String title);
 	public ArrayList<User> findUserByLastName(String lastname);
 	public List<Pair<User, Book>> insertBook(String firstName, String lastname, String title, String isbn, String published);
+	public ArrayList<User> getAllUsers();
 }

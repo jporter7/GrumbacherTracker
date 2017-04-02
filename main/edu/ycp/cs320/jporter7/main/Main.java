@@ -6,6 +6,11 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.eclipse.jetty.webapp.WebAppContext;
 
+import edu.ycp.cs320.jporter7.populationdb.InitDatabase;
+import edu.ycp.cs320.jporter7.populationdb.persist.DatabaseProvider;
+import edu.ycp.cs320.jporter7.populationdb.persist.IDatabase;
+import edu.ycp.cs320.jporter7.servlet.LoginServlet;
+
 public class Main {
 	public static void main(String[] args) throws Exception {
 		Server server = new Server(8081);
@@ -24,6 +29,17 @@ public class Main {
 		
 		// Wait for the user to type "quit"
 		System.out.println("Web server started, type quit to shut down");
+		////////////////////////Initialize database and pass to login servlet//////////////////////////////////
+		Scanner keyboard2 = new Scanner(System.in);
+
+		// Create the default IDatabase instance
+		InitDatabase.init(keyboard2);
+		// get the DB instance and execute transaction
+		IDatabase db = DatabaseProvider.getInstance();
+		
+		handler.setAttribute("database", db);
+        handler.addServlet(LoginServlet.class, "/login/*");
+		//////////////////////////////////////////////////////////////////
 		Scanner keyboard = new Scanner(System.in);
 		while (keyboard.hasNextLine()) {
 			String line = keyboard.nextLine();
