@@ -173,12 +173,13 @@ public class DerbyDatabase implements IDatabase
 	
 	private void loadUser(User user, ResultSet resultSet, int index) throws SQLException 
 	{
-		UserController controller = new UserController(user);
-		controller.createUser(resultSet.getString(index++), resultSet.getString(index++), resultSet.getString(index++),
-				resultSet.getString(index++), resultSet.getString(index++), resultSet.getInt(index++));
-		/*user.setUserId(resultSet.getInt(index++));
-		user.setLastname(resultSet.getString(index++));
-		user.setFirstname(resultSet.getString(index++));*/
+		user.setDbId(resultSet.getInt(index++));
+		user.setPassword(resultSet.getString(index++));
+		user.setUserName(resultSet.getString(index++));
+		user.setEmail(resultSet.getString(index++));
+		user.setfirstName(resultSet.getString(index++));
+		user.setlastName(resultSet.getString(index++));
+		user.setId(resultSet.getInt(index++));
 	}
 	
 	private void loadBook(Book book, ResultSet resultSet, int index) throws SQLException 
@@ -198,7 +199,7 @@ public class DerbyDatabase implements IDatabase
 			public Boolean execute(Connection conn) throws SQLException 
 			{
 				PreparedStatement stmt1 = null;
-				PreparedStatement stmt2 = null;
+				//PreparedStatement stmt2 = null;
 				
 				try 
 				{
@@ -206,13 +207,17 @@ public class DerbyDatabase implements IDatabase
 						"create table users (" +
 						"	user_id integer primary key " +
 						"		generated always as identity (start with 1, increment by 1), " +									
-						"	lastname varchar(40)," +
-						"	firstname varchar(40)" +
+						"	password varchar(20)," +
+						"	username varchar(20)," +
+						"	email varchar(20)," +
+						"	firstname varchar(15)," +
+						"	lastname varchar(15)," +
+						"	id_number integer " +
 						")"
 					);	
 					stmt1.executeUpdate();
 					
-					stmt2 = conn.prepareStatement(
+					/*stmt2 = conn.prepareStatement(
 							"create table books (" +
 							"	book_id integer primary key " +
 							"		generated always as identity (start with 1, increment by 1), " +
@@ -222,47 +227,58 @@ public class DerbyDatabase implements IDatabase
 							"   published integer " +
 							")"
 					);
-					stmt2.executeUpdate();
+					stmt2.executeUpdate();*/
 					
 					return true;
 				} 
 				finally 
 				{
 					DBUtil.closeQuietly(stmt1);
-					DBUtil.closeQuietly(stmt2);
+					//DBUtil.closeQuietly(stmt2);
 				}
 			}
 		});
 	}
 	
-	public void loadInitialData() {
-		executeTransaction(new Transaction<Boolean>() {
+	public void loadInitialData() 
+	{
+		executeTransaction(new Transaction<Boolean>() 
+		{
 			@Override
-			public Boolean execute(Connection conn) throws SQLException {
+			public Boolean execute(Connection conn) throws SQLException 
+			{
 				List<User> userList;
-				List<Book> bookList;
+				//List<Book> bookList;
 				
-				try {
+				try 
+				{
 					userList = InitialData.getUsers();
-					bookList = InitialData.getBooks();
-				} catch (IOException e) {
+					//bookList = InitialData.getBooks();
+				} 
+				catch (IOException e) 
+				{
 					throw new SQLException("Couldn't read initial data", e);
 				}
 
 				PreparedStatement insertUser = null;
-				PreparedStatement insertBook   = null;
+				//PreparedStatement insertBook   = null;
 
 				try {
 					// populate users table (do users first, since user_id is foreign key in books table)
-					insertUser = conn.prepareStatement("insert into users (lastname, firstname) values (?, ?)");
+					insertUser = conn.prepareStatement("insert into users (password, username, email, firstname, lastname, id_number) values (?, ?, ?, ?, ?, ?)");
 					for (User user : userList) {
 //						insertUser.setInt(1, user.getUserId());	// auto-generated primary key, don't insert this
-						insertUser.setString(1, user.getLastName());
-						insertUser.setString(2, user.getFirstName());
+						insertUser.setString(1, user.getPassword());
+						insertUser.setString(2, user.getUserName());
+						insertUser.setString(3, user.getEmail());
+						insertUser.setString(4, user.getFirstName());
+						insertUser.setString(5, user.getLastName());
+						insertUser.setInt(6, user.getId());
 						insertUser.addBatch();
 					}
 					insertUser.executeBatch();
 					
+					/*
 					// populate books table (do this after users table,
 					// since user_id must exist in users table before inserting book)
 					insertBook = conn.prepareStatement("insert into books (user_id, title, isbn, published) values (?, ?, ?, ?)");
@@ -275,10 +291,10 @@ public class DerbyDatabase implements IDatabase
 						insertBook.addBatch();
 					}
 					insertBook.executeBatch();
-					
+					*/
 					return true;
 				} finally {
-					DBUtil.closeQuietly(insertBook);
+					//DBUtil.closeQuietly(insertBook);
 					DBUtil.closeQuietly(insertUser);
 				}
 			}
@@ -372,7 +388,51 @@ public class DerbyDatabase implements IDatabase
 	
 	public ArrayList<User> getAllUsers()
 	{
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
+		//@Override
+		return executeTransaction(new Transaction<ArrayList<User>>()
+			{
+				@Override
+				public ArrayList<User> execute(Connection conn) throws SQLException
+				{
+					PreparedStatement stmt = null;
+					ResultSet resultSet = null;
+					try
+					{
+						stmt = conn.prepareStatement("select * from users");
+						resultSet = stmt.executeQuery();
+						
+						ArrayList<User> result = new ArrayList<User>();
+						
+						boolean success = false;
+						while (resultSet.next())
+						{
+							//create user and load the attributes of the user to 
+							//a new user instance
+							User user = new User();
+							loadUser(user, resultSet, 1);
+							
+							//add the user to the arraylist that will be returned
+							result.add(user);
+							success = true;
+						}
+						
+						if (!success) 
+						{
+							System.out.println("Users were not found in the users table");
+						}
+						
+						return result;
+					}
+					finally
+					{
+						//DBUtil.closeQuietly(resultSet);
+						DBUtil.closeQuietly(stmt);
+					}
+					
+			}
+		});
+		
 	}
 	
 	public List<Pair<User, Book>> insertBook(String firstName, String lastName, String title, String isbn, String published)

@@ -44,11 +44,6 @@
   
   <!-- AJAX servlets. -->
   <servlet>
-    <servlet-name>GrumbacherAjaxServlet</servlet-name>
-    <servlet-class>edu.ycp.cs320.jporter7.servlet.ajax.GrumbacherAjaxServlet</servlet-class>
-  </servlet>
-  
-  <servlet>
     <servlet-name>RacquetBallAjaxServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.jporter7.servlet.ajax.RacquetBallAjaxServlet</servlet-class>
   </servlet>  
@@ -109,11 +104,6 @@
   </servlet-mapping>
   
   <!--  AJAX servlet mappings. -->
-  <servlet-mapping>
-    <servlet-name>GrumbacherAjaxServlet</servlet-name>
-    <url-pattern>/ajax/grumbacher</url-pattern>
-  </servlet-mapping>
-  
   <servlet-mapping>
     <servlet-name>RacquetBallAjaxServlet</servlet-name>
     <url-pattern>/ajax/racquetBall</url-pattern>

@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import edu.ycp.cs320.jporter7.controller.NumbersController;
-import edu.ycp.cs320.jporter7.model.Numbers;
 
 public class RacquetBallServlet extends HttpServlet
 {
@@ -39,8 +37,8 @@ public class RacquetBallServlet extends HttpServlet
 			throws ServletException, IOException {
 		
 		// Decode form parameters and dispatch to controller
-		Numbers model = new Numbers();
-		NumbersController controller;
+		//Numbers model = new Numbers();
+		//NumbersController controller;
 		
 		String errorMessage = null;
 		//Double result = null;
@@ -56,11 +54,11 @@ public class RacquetBallServlet extends HttpServlet
 			} 
 			else 
 			{
-				model.setFirst(first);
-				model.setSecond(second);
+				//model.setFirst(first);
+				//model.setSecond(second);
 				//model.setThird(third);
-				controller = new NumbersController(model);
-				controller.multiply();
+				//controller = new NumbersController(model);
+				//controller.multiply();
 			}
 		} 
 		catch (NumberFormatException e) 
@@ -71,7 +69,7 @@ public class RacquetBallServlet extends HttpServlet
 		// Add parameters as request attributes
 		//req.setAttribute("model.first", model.getFirst());
 		//req.setAttribute("model.second", model.getSecond());
-		req.setAttribute("model", model);
+		//req.setAttribute("model", model);
 		
 		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);

@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.jporter7.controller.NumbersController;
-import edu.ycp.cs320.jporter7.model.Numbers;
 
 public class RacquetBallAjaxServlet extends HttpServlet
 {
@@ -39,15 +37,15 @@ public class RacquetBallAjaxServlet extends HttpServlet
 		}
 		
 		// Use a controller to process the request
-		Numbers model = new Numbers();
-		model.setFirst(first);
-		model.setSecond(second);
-		NumbersController controller = new NumbersController(model);
-		controller.multiply();
+		//Numbers model = new Numbers();
+		//model.setFirst(first);
+		//model.setSecond(second);
+		//NumbersController controller = new NumbersController(model);
+		//controller.multiply();
 		
 		// Send back a response
 		resp.setContentType("text/plain");
-		resp.getWriter().println(model.getMultiplyResult().toString());
+		//resp.getWriter().println(model.getMultiplyResult().toString());
 	}
 
 	private Double getDouble(HttpServletRequest req, String name) {

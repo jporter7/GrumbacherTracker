@@ -18,7 +18,7 @@ public class IndexServlet extends HttpServlet {
 		
 		Object username = req.getSession().getAttribute("username");
 		Object password = req.getSession().getAttribute("password");
-		HttpSession session= req.getSession(false); 
+		//HttpSession session= req.getSession(false); 
 		if (username == null || username.equals("") || password == null || password.equals(""))
 		{
 			System.out.println("Need to login");

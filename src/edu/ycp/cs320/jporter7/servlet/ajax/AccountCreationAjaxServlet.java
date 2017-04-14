@@ -7,9 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.jporter7.controller.NumbersController;
 import edu.ycp.cs320.jporter7.controller.UserController;
-import edu.ycp.cs320.jporter7.model.Numbers;
 import edu.ycp.cs320.jporter7.model.User;
 
 public class AccountCreationAjaxServlet extends HttpServlet {

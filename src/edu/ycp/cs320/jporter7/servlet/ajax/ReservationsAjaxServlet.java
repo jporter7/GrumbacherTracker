@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import edu.ycp.cs320.jporter7.controller.NumbersController;
-import edu.ycp.cs320.jporter7.model.Numbers;
 
 public class ReservationsAjaxServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -39,16 +37,16 @@ public class ReservationsAjaxServlet extends HttpServlet {
 		}
 		
 		// Use a controller to process the request
-		Numbers model = new Numbers();
-		model.setFirst(first);
-		model.setSecond(second);
-		model.setThird(third);
-		NumbersController controller = new NumbersController(model);
-		controller.add();
+		//Numbers model = new Numbers();
+		//model.setFirst(first);
+		//model.setSecond(second);
+		//model.setThird(third);
+		//NumbersController controller = new NumbersController(model);
+		//controller.add();
 		
 		// Send back a response
 		resp.setContentType("text/plain");
-		resp.getWriter().println(model.getAddResult().toString());
+		//resp.getWriter().println(model.getAddResult().toString());
 	}
 
 	private Double getDouble(HttpServletRequest req, String name) {

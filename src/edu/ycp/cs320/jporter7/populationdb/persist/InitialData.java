@@ -13,7 +13,7 @@ import edu.ycp.cs320.jporter7.populationdb.model.Book;
 public class InitialData {
 	public static List<User> getUsers() throws IOException {
 		List<User> userList = new ArrayList<User>();
-		ReadCSV readUsers = new ReadCSV("users.csv");
+		ReadCSV readUsers = new ReadCSV("UserInfo.csv");
 		try 
 		{
 			// auto-generated primary key for authors table

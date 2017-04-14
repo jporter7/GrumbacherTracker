@@ -76,15 +76,6 @@ public class LoginServlet extends HttpServlet
 				errorMessage = "Incorrect username or password";
 				System.out.println(errorMessage);
 			}
-			/*if (username.equals("jporter") && password.equals("admin"))
-			{
-				validCredentials = true;
-				System.out.println("valid credentials");
-			}
-			else
-			{
-				errorMessage = "Incorrect username or password";
-			}*/
 			
 		}
 		

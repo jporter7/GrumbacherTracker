@@ -39,7 +39,7 @@ public class Main {
 		
 		handler.setAttribute("database", db);
         handler.addServlet(LoginServlet.class, "/login/*");
-		//////////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		Scanner keyboard = new Scanner(System.in);
 		while (keyboard.hasNextLine()) {
 			String line = keyboard.nextLine();

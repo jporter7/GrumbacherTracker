@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import edu.ycp.cs320.jporter7.controller.NumbersController;
-import edu.ycp.cs320.jporter7.model.Numbers;
 
 public class GrumbacherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -38,8 +36,6 @@ public class GrumbacherServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		// Decode form parameters and dispatch to controller
-		Numbers model = new Numbers();
-		NumbersController controller;
 		
 		String errorMessage = null;
 		try 
