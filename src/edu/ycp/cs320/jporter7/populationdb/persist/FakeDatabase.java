@@ -147,4 +147,9 @@ public class FakeDatabase implements IDatabase {
 		System.out.println(bookList.size() + " books");
 		return userBookList;
 	}
+	
+	public User insertUser(String password, String username, String email, String firstName, String lastName, String id)
+	{
+		throw new UnsupportedOperationException();
+	}
 }

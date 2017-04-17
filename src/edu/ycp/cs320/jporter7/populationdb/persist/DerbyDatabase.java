@@ -557,4 +557,114 @@ public class DerbyDatabase implements IDatabase
 		});
 		
 	}
+	
+	public User insertUser(String password, String username, String email, String firstName, String lastName, String id)
+	{
+		return executeTransaction(new Transaction<User>() 
+		{
+			@SuppressWarnings("resource")
+			@Override
+			public User execute(Connection conn) throws SQLException 
+			{
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				ResultSet resultSet = null;
+				
+				try 
+				{
+					stmt = conn.prepareStatement(
+							"select users.username "
+							+ "  from users "
+							+ "  where users.username = ?"		
+					);
+					
+					//set variables equal to question marks and execute the query
+					stmt.setString(1, username);
+					//stmt.setString(2, password);
+					resultSet = stmt.executeQuery();
+					
+					//if the user was already in the the table, run this block
+					if (resultSet.next())
+					{
+						System.out.println("Username already in use");
+					}
+					//if the user was not in the books table, run this block
+					else
+					{
+						//create statement to insert new user into user's table
+						stmt3 = conn.prepareStatement(
+								"insert into users (password, username, email, firstname, lastname, id_number)"
+								+ "  values (?, ?, ?, ?, ?, ?)"
+										
+						);
+						
+						//set ?'s equal to variables and execute update
+						stmt3.setString(1, password);
+						stmt3.setString(2, username);
+						stmt3.setString(3, email);
+						stmt3.setString(4, firstName);
+						stmt3.setString(5, lastName);
+						stmt3.setString(6, id);
+						stmt3.executeUpdate();
+						System.out.println("User added");
+						
+						//create new statement to get new user's id
+						stmt = conn.prepareStatement(
+								"select users.user_id, users.password, users.username, users.email, users.firstname, users.lastname, users.id_number "
+								+ "  from users "
+								+ "  where users.password = ? and users.username = ?"		
+						);
+						
+						//set variables equal to question marks and set resultSet equal to user's id
+						stmt.setString(1, password);
+						stmt.setString(2, username);
+						resultSet = stmt.executeQuery();
+						
+						/*//move cursor and create statement to add user's new book into books
+						resultSet.next();
+						Object obj = resultSet.getString(1);
+						stmt2 = conn.prepareStatement(
+								"insert into books (user_id, title, isbn, published) "
+								+ "  values (?, ?, ?, ?)"
+						);			
+						
+
+						// substitute the title entered by the user for the placeholder in the query
+						stmt2.setString(1, obj.toString());
+						stmt2.setString(2, title);
+						stmt2.setString(3, isbn);
+						stmt2.setString(4, published);
+
+						// execute the update
+						stmt2.executeUpdate();*/
+					}
+					User result = new User();
+					
+					
+					while (resultSet.next()) 
+					{	
+						// create new User object
+						// retrieve attributes from resultSet starting with index 1
+						User user = new User();
+						loadUser(user, resultSet, 1);
+
+						result = user;
+					}
+				
+					return result;
+				} 
+				finally 
+				{
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+		
+	}
+	
+	
+	
+	
 }
