@@ -37,29 +37,26 @@ public class InitialData {
 		}
 	}
 	
-	public static List<Book> getBooks() throws IOException {
-		List<Book> bookList = new ArrayList<Book>();
-		ReadCSV readBooks = new ReadCSV("books.csv");
+	public static List<User> getActive() throws IOException {
+		List<User> activeList = new ArrayList<User>();
+		ReadCSV readActive = new ReadCSV("active.csv");
 		try {
 			// auto-generated primary key for books table
-			Integer bookId = 1;
+			Integer activeId = 1;
 			while (true) {
-				List<String> tuple = readBooks.next();
+				List<String> tuple = readActive.next();
 				if (tuple == null) {
 					break;
 				}
 				Iterator<String> i = tuple.iterator();
-				Book book = new Book();
-				book.setBookId(bookId++);
-				book.setUserId(Integer.parseInt(i.next()));
-				book.setTitle(i.next());
-				book.setIsbn(i.next());
-				book.setPublished(Integer.parseInt(i.next()));
-				bookList.add(book);
+				User user = new User();
+				user.setDbId(Integer.parseInt(i.next()));
+				user.setRoom(Integer.parseInt(i.next()));
+				activeList.add(user);
 			}
-			return bookList;
+			return activeList;
 		} finally {
-			readBooks.close();
+			readActive.close();
 		}
 	}
 }

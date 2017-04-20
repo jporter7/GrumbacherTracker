@@ -4,26 +4,18 @@
 
 <html>
 <head>
-<title>YCP Grumbacher Tracker</title>
-<style type = "text/css">
-<link rel="stylesheet" type="text/css" href="Resume_CSS.css">
-.error {
-			color: red;
-		}
 
-</style>
+	<title>YCP Grumbacher Tracker</title>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css" />
+	
 </head>
-<body>
 
-<c:if test="${! empty errorMessage}">
-	<div class="error">${errorMessage}</div>
-</c:if>
+<body>
     
 <div>
     <h2>YCP Grumbacher Facility</h2> 
     
     <div>
-   This is the login page
 		
 		<form action="${pageContext.servletContext.contextPath}/login" method="post">
 			<table>

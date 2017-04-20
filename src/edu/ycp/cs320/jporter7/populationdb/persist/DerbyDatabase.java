@@ -182,6 +182,12 @@ public class DerbyDatabase implements IDatabase
 		user.setId(resultSet.getInt(index++));
 	}
 	
+	private void loadActiveUser(User user, ResultSet resultSet, int index) throws SQLException 
+	{
+		user.setDbId(resultSet.getInt(index++));
+		user.setRoom(resultSet.getInt(index++));
+	}
+	
 	private void loadBook(Book book, ResultSet resultSet, int index) throws SQLException 
 	{
 		book.setBookId(resultSet.getInt(index++));
@@ -199,7 +205,7 @@ public class DerbyDatabase implements IDatabase
 			public Boolean execute(Connection conn) throws SQLException 
 			{
 				PreparedStatement stmt1 = null;
-				//PreparedStatement stmt2 = null;
+				PreparedStatement stmt2 = null;
 				
 				try 
 				{
@@ -217,17 +223,15 @@ public class DerbyDatabase implements IDatabase
 					);	
 					stmt1.executeUpdate();
 					
-					/*stmt2 = conn.prepareStatement(
-							"create table books (" +
-							"	book_id integer primary key " +
+					stmt2 = conn.prepareStatement(
+							"create table active (" +
+							"	active_id integer primary key " +
 							"		generated always as identity (start with 1, increment by 1), " +
 							"	user_id integer constraint user_id references users, " +
-							"	title varchar(70)," +
-							"	isbn varchar(15)," +
-							"   published integer " +
+							"	room integer " +
 							")"
 					);
-					stmt2.executeUpdate();*/
+					stmt2.executeUpdate();
 					
 					return true;
 				} 
@@ -248,12 +252,12 @@ public class DerbyDatabase implements IDatabase
 			public Boolean execute(Connection conn) throws SQLException 
 			{
 				List<User> userList;
-				//List<Book> bookList;
+				List<User> activeList;
 				
 				try 
 				{
 					userList = InitialData.getUsers();
-					//bookList = InitialData.getBooks();
+					activeList = InitialData.getActive();
 				} 
 				catch (IOException e) 
 				{
@@ -261,7 +265,7 @@ public class DerbyDatabase implements IDatabase
 				}
 
 				PreparedStatement insertUser = null;
-				//PreparedStatement insertBook   = null;
+				PreparedStatement insertActive = null;
 
 				try {
 					// populate users table (do users first, since user_id is foreign key in books table)
@@ -278,20 +282,18 @@ public class DerbyDatabase implements IDatabase
 					}
 					insertUser.executeBatch();
 					
-					/*
-					// populate books table (do this after users table,
+					
+					// populate active user table (do this after users table,
 					// since user_id must exist in users table before inserting book)
-					insertBook = conn.prepareStatement("insert into books (user_id, title, isbn, published) values (?, ?, ?, ?)");
-					for (Book book : bookList) {
+					insertActive = conn.prepareStatement("insert into active (user_id, room) values (?, ?)");
+					for (User user : activeList) {
 //						insertBook.setInt(1, book.getBookId());		// auto-generated primary key, don't insert this
-						insertBook.setInt(1, book.getUserId());
-						insertBook.setString(2, book.getTitle());
-						insertBook.setString(3, book.getIsbn());
-						insertBook.setInt(4,  book.getPublished());
-						insertBook.addBatch();
+						insertActive.setInt(1, user.getDbId());
+						insertActive.setInt(2, user.getRoom());
+						insertActive.addBatch();
 					}
-					insertBook.executeBatch();
-					*/
+					insertActive.executeBatch();
+					
 					return true;
 				} finally {
 					//DBUtil.closeQuietly(insertBook);
@@ -434,6 +436,57 @@ public class DerbyDatabase implements IDatabase
 		});
 		
 	}
+	
+	public ArrayList<User> getActiveUsers()
+	{
+		//throw new UnsupportedOperationException();
+		//@Override
+		return executeTransaction(new Transaction<ArrayList<User>>()
+			{
+				@Override
+				public ArrayList<User> execute(Connection conn) throws SQLException
+				{
+					PreparedStatement stmt = null;
+					ResultSet resultSet = null;
+					try
+					{
+						stmt = conn.prepareStatement("select * from active");
+						resultSet = stmt.executeQuery();
+						
+						ArrayList<User> result = new ArrayList<User>();
+						
+						boolean success = false;
+						while (resultSet.next())
+						{
+							//create user and load the attributes of the user to 
+							//a new user instance
+							User user = new User();
+							loadActiveUser(user, resultSet, 1);
+							
+							//add the user to the arraylist that will be returned
+							result.add(user);
+							success = true;
+						}
+						
+						if (!success) 
+						{
+							System.out.println("Active users were not found in the active table");
+						}
+						
+						return result;
+					}
+					finally
+					{
+						//DBUtil.closeQuietly(resultSet);
+						DBUtil.closeQuietly(stmt);
+					}
+					
+			}
+		});
+		
+	}
+	
+	
 	
 	public List<Pair<User, Book>> insertBook(String firstName, String lastName, String title, String isbn, String published)
 	{

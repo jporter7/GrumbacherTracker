@@ -1,0 +1,42 @@
+body 
+{
+   background-image: url(https://chambermaster.blob.core.windows.net/userfiles/UserFiles/chambers/2302/Image/YorkCollegeColor.jpg);
+}
+
+h1 
+{
+    border-top: 5px solid purple;
+    border-bottom: 5px solid purple;
+    color: YELL;
+    text-align: center;
+}
+
+h2
+{
+    color: #399143;
+    font: 150%;
+    font-size: 200%;
+
+}
+.overhead
+{
+    float: left;
+}
+
+.contact
+{
+    float: left;
+    margin-left: 20px;
+    border-top: 2px solid purple;
+     border-left: 2px solid purple;
+     border-right: 2px solid purple;
+    border-bottom: 2px solid purple;
+    padding: 20px;
+}
+
+.IcanHasSpan
+{
+    font-style: oblique;
+    text-decoration: underline;
+    
+}

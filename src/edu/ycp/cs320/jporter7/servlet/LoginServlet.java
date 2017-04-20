@@ -10,14 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import edu.ycp.cs320.jporter7.model.PopulationCounter;
 import edu.ycp.cs320.jporter7.model.User;
 import edu.ycp.cs320.jporter7.populationdb.InitDatabase;
 import edu.ycp.cs320.jporter7.populationdb.persist.DatabaseProvider;
 import edu.ycp.cs320.jporter7.populationdb.persist.IDatabase;
+import edu.ycp.cs320.jporter7.controller.PopulationCounterController;
 
 public class LoginServlet extends HttpServlet 
 {
 	private static final long serialVersionUID = 1L;
+	private static final String PopulationCounterController = null;
 	private IDatabase db;
 
     @Override

@@ -3,7 +3,7 @@ package edu.ycp.cs320.jporter7.model;
 public class User 
 {
 	private String password, userName, email, firstName, lastName;
-	private int id, dbId;
+	private int id, dbId, room;
 	private boolean isFaculty;
 	
 	public User()
@@ -46,9 +46,14 @@ public class User
 	{
 		this.isFaculty = isFaculty;
 	}
+	
 	public void setDbId(int dbId)
 	{
 		this.dbId = dbId;
+	}
+	public void setRoom(int room)
+	{
+		this.room = room;
 	}
 	
 	////////////////////////////////////////////////
@@ -98,5 +103,9 @@ public class User
 		return dbId;
 	}
 	
+	public int getRoom()
+	{
+		return room;
+	}
 	
 }

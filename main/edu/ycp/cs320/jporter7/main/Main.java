@@ -10,6 +10,7 @@ import edu.ycp.cs320.jporter7.populationdb.InitDatabase;
 import edu.ycp.cs320.jporter7.populationdb.persist.DatabaseProvider;
 import edu.ycp.cs320.jporter7.populationdb.persist.IDatabase;
 import edu.ycp.cs320.jporter7.servlet.AccountCreationServlet;
+import edu.ycp.cs320.jporter7.servlet.IndexServlet;
 import edu.ycp.cs320.jporter7.servlet.LoginServlet;
 
 public class Main {
@@ -41,6 +42,7 @@ public class Main {
 		handler.setAttribute("database", db);
         handler.addServlet(LoginServlet.class, "/login/*");
         handler.addServlet(AccountCreationServlet.class, "/accountCreation/*");
+        handler.addServlet(IndexServlet.class, "/index/*");
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		Scanner keyboard = new Scanner(System.in);
 		while (keyboard.hasNextLine()) {

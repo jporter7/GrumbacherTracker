@@ -1,0 +1,27 @@
+input[type=submit] 
+{
+    background-color: #399143;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    margin: 5px 1px;
+    cursor: pointer;
+}
+
+h1
+{
+	text-decoration: underline;
+	text-shadow: 1px 1px #000000;
+	text-align: center;
+	font-size: 64px;
+	color: #399143;
+	
+}
+
+.popNumbers
+{
+	text-align: center;
+}
