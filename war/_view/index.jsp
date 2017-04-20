@@ -5,15 +5,15 @@
 <html>
 
 	<head>
-		<title>Index view</title>
+		<title>GSFC Populations</title>
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/index_css.css" />
 	</head>
 	
 	<body>
-		<h1>Index Page</h1>
+		<h1>Populations</h1>
 		
 		<form action="${pageContext.servletContext.contextPath}/index" method="post">
-			<table>
+			<table align="center">
 				<tr>
 					<td><input type="Submit" name="Grumbacher" value="Grumbacher"></td>
 					<td>${model.popTotal}</td>
