@@ -42,6 +42,31 @@
     <servlet-class>edu.ycp.cs320.jporter7.servlet.LoginServlet</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>PoolServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.PoolServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>FieldHouseServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.FieldHouseServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>WolfBasketballServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.WolfBasketballServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>RockWallServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.RockWallServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <servlet-name>DanceRoomServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.DanceRoomServlet</servlet-class>
+  </servlet>
+  
   <!-- AJAX servlets. -->
   <servlet>
     <servlet-name>RacquetBallAjaxServlet</servlet-name>
@@ -67,7 +92,7 @@
     <servlet-name>LoginAjaxServlet</servlet-name>
     <servlet-class>edu.ycp.cs320.jporter7.servlet.ajax.LoginAjaxServlet</servlet-class>
   </servlet>
-
+	
   <!-- Servlet mappings -->
   <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
@@ -101,6 +126,31 @@
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>PoolServlet</servlet-name>
+    <url-pattern>/pool</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>FieldHouseServlet</servlet-name>
+    <url-pattern>/fieldHouse</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>WolfBasketballServlet</servlet-name>
+    <url-pattern>/wolfBasketball</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>RockWallServlet</servlet-name>
+    <url-pattern>/rockWall</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>DanceRoomServlet</servlet-name>
+    <url-pattern>/danceRoom</url-pattern>
   </servlet-mapping>
   
   <!--  AJAX servlet mappings. -->

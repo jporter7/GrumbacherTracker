@@ -30,7 +30,7 @@ public class FakeDatabase implements IDatabase {
 	public void readInitialData() {
 		try {
 			userList.addAll(InitialData.getUsers());
-			bookList.addAll(InitialData.getBooks());
+			//bookList.addAll(InitialData.getBooks());
 		} catch (IOException e) {
 			throw new IllegalStateException("Couldn't read initial data", e);
 		}
@@ -151,5 +151,11 @@ public class FakeDatabase implements IDatabase {
 	public User insertUser(String password, String username, String email, String firstName, String lastName, String id)
 	{
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public ArrayList<User> getActiveUsers() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

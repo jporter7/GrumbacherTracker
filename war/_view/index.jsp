@@ -28,6 +28,31 @@
 					<td><input type="Submit" name="RacquetBall" value="Racquet Ball"></td>
 					<td>${model.racquet}</td>
 				</tr>
+				
+				<tr>
+					<td><input type="Submit" name="Pool" value="Pool"></td>
+					<td>${model.pool}</td>
+				</tr>
+				
+				<tr>
+					<td><input type="Submit" name="FieldHouse" value="Field House"></td>
+					<td>${model.fieldHouse}</td>
+				</tr>
+				
+				<tr>
+					<td><input type="Submit" name="WolfBasketball" value="Wolf Basketball"></td>
+					<td>${model.wolfBasketball}</td>
+				</tr>
+				
+				<tr>
+					<td><input type="Submit" name="RockWall" value="Rock Wall"></td>
+					<td>${model.rockWall}</td>
+				</tr>
+				
+				<tr>
+					<td><input type="Submit" name="DanceRoom" value="Dance Room"></td>
+					<td>${model.danceRoom}</td>
+				</tr>
 			</table>
 			
 		</form>

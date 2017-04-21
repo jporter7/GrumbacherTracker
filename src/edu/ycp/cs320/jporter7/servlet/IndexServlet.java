@@ -54,19 +54,35 @@ public class IndexServlet extends HttpServlet {
 	{
 		if (req.getParameter("Grumbacher") != null)
 		{
-			resp.sendRedirect(req.getContextPath() + "/grumbacher");
+			resp.sendRedirect(req.getContextPath() + "/index");
 		}
 		else if (req.getParameter("WeightRoom") != null)
 		{
 			resp.sendRedirect(req.getContextPath() + "/weightRoom");
 		}
-		else if (req.getParameter("Reservations") != null)
+		else if (req.getParameter("FieldHouse") != null)
 		{
-			resp.sendRedirect(req.getContextPath() + "/reservations");
+			resp.sendRedirect(req.getContextPath() + "/index");
+		}
+		else if (req.getParameter("WolfBasketball") != null)
+		{
+			resp.sendRedirect(req.getContextPath() + "/wolfBasketball");
+		}
+		else if (req.getParameter("Pool") != null)
+		{
+			resp.sendRedirect(req.getContextPath() + "/pool");
+		}
+		else if (req.getParameter("DanceRoom") != null)
+		{
+			resp.sendRedirect(req.getContextPath() + "/danceRoom");
 		}
 		else if (req.getParameter("RacquetBall") != null)
 		{
-			resp.sendRedirect(req.getContextPath() + "/reservations");
+			resp.sendRedirect(req.getContextPath() + "/racquetBall");
+		}
+		else if (req.getParameter("RockWall") != null)
+		{
+			resp.sendRedirect(req.getContextPath() + "/rockWall");
 		}
 		else
 		{

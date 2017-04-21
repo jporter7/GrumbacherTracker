@@ -8,8 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
-public class RacquetBallServlet extends HttpServlet
+public class FieldHouseServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 
@@ -28,15 +27,15 @@ public class RacquetBallServlet extends HttpServlet
 		}
 		else
 		{
-			req.getRequestDispatcher("/_view/racquetBall.jsp").forward(req, resp);
+			req.getRequestDispatcher("/_view/index.jsp").forward(req, resp);
 		}
 	}
+	
 	
 	@SuppressWarnings("unused")
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException 
-	{
+			throws ServletException, IOException {
 		
 		// Decode form parameters and dispatch to controller
 
@@ -44,12 +43,11 @@ public class RacquetBallServlet extends HttpServlet
 		//Double result = null;
 		try 
 		{
-
-			if (false) 
+			if (false)
 			{
-				errorMessage = "Please specify two numbers";
-			} 
-			else 
+				
+			}
+			else
 			{
 				
 			}
@@ -59,9 +57,7 @@ public class RacquetBallServlet extends HttpServlet
 			errorMessage = "Invalid double";
 		}
 		
-		// Add parameters as request attributes
 		
-		// Add result objects as request attributes
 		req.setAttribute("errorMessage", errorMessage);
 		
 		// Forward to view to render the result HTML document

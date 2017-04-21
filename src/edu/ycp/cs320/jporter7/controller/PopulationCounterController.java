@@ -35,7 +35,6 @@ public class PopulationCounterController
 		activeUsers = db.getActiveUsers();
 		for (int i = 0; i < activeUsers.size(); i++)
 		{
-			System.out.println(activeUsers.get(i).getRoom());
 			
 			if (activeUsers.get(i).getRoom() == 1)
 			{

@@ -184,10 +184,7 @@ public class DerbyDatabase implements IDatabase
 	
 	private void loadActiveUser(User user, ResultSet resultSet, int index) throws SQLException 
 	{
-		System.out.println("db id: " + resultSet.getInt(index));
-		user.setDbId(resultSet.getInt(index++));
-		
-		System.out.println("room id: " + resultSet.getInt(index));
+		user.setDbId(resultSet.getInt(index++));	
 		user.setRoom(resultSet.getInt(index++));
 	}
 	

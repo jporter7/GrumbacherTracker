@@ -27,7 +27,7 @@ public class GrumbacherServlet extends HttpServlet {
 		}
 		else
 		{
-			req.getRequestDispatcher("/_view/grumbacher.jsp").forward(req, resp);
+			req.getRequestDispatcher("/_view/index.jsp").forward(req, resp);
 		}
 	}
 	
