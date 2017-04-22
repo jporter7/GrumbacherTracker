@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import edu.ycp.cs320.jporter7.controller.PopulationCounterController;
 import edu.ycp.cs320.jporter7.model.PopulationCounter;
+import edu.ycp.cs320.jporter7.model.User;
 import edu.ycp.cs320.jporter7.populationdb.persist.IDatabase;
 
 public class IndexServlet extends HttpServlet {

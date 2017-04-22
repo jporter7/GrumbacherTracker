@@ -717,6 +717,90 @@ public class DerbyDatabase implements IDatabase
 		
 	}
 	
+	public User insertActiveUser(String dbId, String roomNumber)
+	{
+		return executeTransaction(new Transaction<User>() 
+		{
+			@SuppressWarnings("resource")
+			@Override
+			public User execute(Connection conn) throws SQLException 
+			{
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				ResultSet resultSet = null;
+				
+				try 
+				{
+					stmt = conn.prepareStatement(
+							"select active.user_id "
+							+ "  from active "
+							+ "  where active.user_id = ?"		
+					);
+					
+					//set variables equal to question marks and execute the query
+					stmt.setString(1, dbId);
+					//stmt.setString(2, password);
+					resultSet = stmt.executeQuery();
+					
+					//if the user was already in the the table, run this block
+					if (resultSet.next())
+					{
+						System.out.println("User already is active");
+					}
+					//if the user was not in the books table, run this block
+					else
+					{
+						//create statement to insert new user into user's table
+						stmt3 = conn.prepareStatement(
+								"insert into active (user_id, room)"
+								+ "  values (?, ?)"
+										
+						);
+						
+						//set ?'s equal to variables and execute update
+						stmt3.setString(1, dbId);
+						stmt3.setString(2, roomNumber);
+						stmt3.executeUpdate();
+						System.out.println("Active User added");
+						
+						//create new statement to get new user's id
+						stmt = conn.prepareStatement(
+								"select active.user_id, active.room "
+								+ "  from active "
+								+ "  where active.user_id = ? and active.room = ?"		
+						);
+						
+						//set variables equal to question marks and set resultSet equal to user's id
+						stmt.setString(1, dbId);
+						stmt.setString(2, roomNumber);
+						resultSet = stmt.executeQuery();
+						
+					}
+					User result = new User();
+					
+					
+					while (resultSet.next()) 
+					{	
+						// create new User object
+						// retrieve attributes from resultSet starting with index 1
+						User user = new User();
+						loadActiveUser(user, resultSet, 1);
+
+						result = user;
+					}
+				
+					return result;
+				} 
+				finally 
+				{
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+				}
+			}
+		});
+		
+	}
 	
 	
 	

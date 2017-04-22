@@ -16,4 +16,5 @@ public interface IDatabase
 	public ArrayList<User> getAllUsers();
 	public User insertUser(String password, String username, String email, String firstName, String lastName, String id);
 	public ArrayList<User> getActiveUsers();
+	public User insertActiveUser(String dbId, String roomNumber);
 }
