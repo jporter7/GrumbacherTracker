@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import edu.ycp.cs320.jporter7.controller.UserController;
+import edu.ycp.cs320.jporter7.model.Reservation;
 import edu.ycp.cs320.jporter7.model.User;
 import edu.ycp.cs320.jporter7.populationdb.model.Book;
 import edu.ycp.cs320.jporter7.populationdb.model.Pair;
@@ -173,7 +174,8 @@ public class DerbyDatabase implements IDatabase
 	
 	private void loadUser(User user, ResultSet resultSet, int index) throws SQLException 
 	{
-		user.setDbId(resultSet.getInt(index++));
+		user.setDbId(resultSet.getInt(index++));	
+		index++;
 		user.setPassword(resultSet.getString(index++));
 		user.setUserName(resultSet.getString(index++));
 		user.setEmail(resultSet.getString(index++));
@@ -186,6 +188,15 @@ public class DerbyDatabase implements IDatabase
 	{
 		user.setDbId(resultSet.getInt(index++));	
 		user.setRoom(resultSet.getInt(index++));
+	}
+	
+	private void loadReservation(Reservation reservation, ResultSet resultSet, int index) throws SQLException 
+	{
+		reservation.setReservationId(resultSet.getInt(index++));
+		reservation.setUserId(resultSet.getInt(index++));
+		reservation.setRoomNumber(resultSet.getInt(index++));
+		reservation.setDate(resultSet.getString(index++));
+		reservation.setStartTime(resultSet.getString(index++));
 	}
 	
 	private void loadBook(Book book, ResultSet resultSet, int index) throws SQLException 
@@ -206,14 +217,16 @@ public class DerbyDatabase implements IDatabase
 			{
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
-				//PreparedStatement stmt3 = null;
+				PreparedStatement stmt3 = null;
+				PreparedStatement stmt4 = null;
 				
 				try 
 				{
 					stmt1 = conn.prepareStatement(
 						"create table users (" +
 						"	user_id integer primary key " +
-						"		generated always as identity (start with 1, increment by 1), " +									
+						"		generated always as identity (start with 1, increment by 1), " +
+						"	user_id2 integer unique," +
 						"	password varchar(20)," +
 						"	username varchar(20)," +
 						"	email varchar(20)," +
@@ -234,20 +247,34 @@ public class DerbyDatabase implements IDatabase
 					);
 					stmt2.executeUpdate();
 					
-					/*stmt3 = conn.prepareStatement(
+					stmt3 = conn.prepareStatement(
 							"create table reservations (" +
-							"	user_id integer constraint user_id references users, " +
-							"	room integer " +
+							"	reservation_id integer primary key " +
+							"		generated always as identity (start with 1, increment by 1), " +
+							"	user_id2 integer constraint user_id2 references users, " +
+							"	room integer, " +
+							"	reservation_date varchar(10), " +
+							"	start_time varchar(10) " +
 							")"
 					);
 					stmt3.executeUpdate();
-					*/
+					
+					/*stmt4 = conn.prepareStatement(
+							"create table userReservations (" +
+							"   reservation_id integer constraint reservation_id references reservations, " +
+							"   user_id2 integer constraint user_id2 references users " +
+							")"
+					);
+					stmt4.executeUpdate();*/
+					
 					return true;
 				} 
 				finally 
 				{
 					DBUtil.closeQuietly(stmt1);
-					//DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt2);
+					DBUtil.closeQuietly(stmt3);
+					DBUtil.closeQuietly(stmt4);
 				}
 			}
 		});
@@ -278,15 +305,17 @@ public class DerbyDatabase implements IDatabase
 
 				try {
 					// populate users table (do users first, since user_id is foreign key in books table)
-					insertUser = conn.prepareStatement("insert into users (password, username, email, firstname, lastname, id_number) values (?, ?, ?, ?, ?, ?)");
+					insertUser = conn.prepareStatement("insert into users (user_id2, password, username, email, firstname, lastname, id_number) values (?, ?, ?, ?, ?, ?, ?)");
 					for (User user : userList) {
+						//int i = 0;
 //						insertUser.setInt(1, user.getUserId());	// auto-generated primary key, don't insert this
-						insertUser.setString(1, user.getPassword());
-						insertUser.setString(2, user.getUserName());
-						insertUser.setString(3, user.getEmail());
-						insertUser.setString(4, user.getFirstName());
-						insertUser.setString(5, user.getLastName());
-						insertUser.setInt(6, user.getId());
+						insertUser.setInt(1, user.getDbId());
+						insertUser.setString(2, user.getPassword());
+						insertUser.setString(3, user.getUserName());
+						insertUser.setString(4, user.getEmail());
+						insertUser.setString(5, user.getFirstName());
+						insertUser.setString(6, user.getLastName());
+						insertUser.setInt(7, user.getId());
 						insertUser.addBatch();
 					}
 					insertUser.executeBatch();
@@ -305,7 +334,7 @@ public class DerbyDatabase implements IDatabase
 					
 					return true;
 				} finally {
-					//DBUtil.closeQuietly(insertBook);
+					DBUtil.closeQuietly(insertActive);
 					DBUtil.closeQuietly(insertUser);
 				}
 			}
@@ -437,7 +466,7 @@ public class DerbyDatabase implements IDatabase
 					}
 					finally
 					{
-						//DBUtil.closeQuietly(resultSet);
+						DBUtil.closeQuietly(resultSet);
 						DBUtil.closeQuietly(stmt);
 					}
 					
@@ -486,7 +515,59 @@ public class DerbyDatabase implements IDatabase
 					}
 					finally
 					{
-						//DBUtil.closeQuietly(resultSet);
+						DBUtil.closeQuietly(resultSet);
+						DBUtil.closeQuietly(stmt);
+					}
+					
+			}
+		});
+		
+	}
+	
+	public ArrayList<Reservation> getReservationsForRoom(String room)
+	{
+		//throw new UnsupportedOperationException();
+		//@Override
+		return executeTransaction(new Transaction<ArrayList<Reservation>>()
+			{
+				@Override
+				public ArrayList<Reservation> execute(Connection conn) throws SQLException
+				{
+					PreparedStatement stmt = null;
+					ResultSet resultSet = null;
+					try
+					{
+						stmt = conn.prepareStatement("select * from reservations"
+								+ " where reservations.room = ?");
+						
+						stmt.setString(1, room);
+						resultSet = stmt.executeQuery();
+						
+						ArrayList<Reservation> result = new ArrayList<Reservation>();
+						
+						boolean success = false;
+						while (resultSet.next())
+						{
+							//create user and load the attributes of the user to 
+							//a new user instance
+							Reservation reservation = new Reservation();
+							loadReservation(reservation, resultSet, 1);
+							
+							//add the user to the arraylist that will be returned
+							result.add(reservation);
+							success = true;
+						}
+						
+						if (!success) 
+						{
+							System.out.println("Reservations were not found in the reservations table");
+						}
+						
+						return result;
+					}
+					finally
+					{
+						DBUtil.closeQuietly(resultSet);
 						DBUtil.closeQuietly(stmt);
 					}
 					
@@ -656,24 +737,26 @@ public class DerbyDatabase implements IDatabase
 					{
 						//create statement to insert new user into user's table
 						stmt3 = conn.prepareStatement(
-								"insert into users (password, username, email, firstname, lastname, id_number)"
-								+ "  values (?, ?, ?, ?, ?, ?)"
+								"insert into users (user_id2, password, username, email, firstname, lastname, id_number)"
+								+ "  values (?, ?, ?, ?, ?, ?, ?)"
 										
 						);
 						
+						ArrayList<User> temp = getAllUsers();
 						//set ?'s equal to variables and execute update
-						stmt3.setString(1, password);
-						stmt3.setString(2, username);
-						stmt3.setString(3, email);
-						stmt3.setString(4, firstName);
-						stmt3.setString(5, lastName);
-						stmt3.setString(6, id);
+						stmt3.setInt(1, (temp.size() + 1));
+						stmt3.setString(2, password);
+						stmt3.setString(3, username);
+						stmt3.setString(4, email);
+						stmt3.setString(5, firstName);
+						stmt3.setString(6, lastName);
+						stmt3.setString(7, id);
 						stmt3.executeUpdate();
 						System.out.println("User added");
 						
 						//create new statement to get new user's id
 						stmt = conn.prepareStatement(
-								"select users.user_id, users.password, users.username, users.email, users.firstname, users.lastname, users.id_number "
+								"select users.user_id, users.user_id2, users.password, users.username, users.email, users.firstname, users.lastname, users.id_number "
 								+ "  from users "
 								+ "  where users.password = ? and users.username = ?"		
 						);
@@ -720,6 +803,7 @@ public class DerbyDatabase implements IDatabase
 				{
 					DBUtil.closeQuietly(resultSet);
 					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt2);
 				}
 			}
 		});
@@ -805,12 +889,104 @@ public class DerbyDatabase implements IDatabase
 				{
 					DBUtil.closeQuietly(resultSet);
 					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt3);
 				}
 			}
 		});
 		
 	}
 	
+	public Reservation insertReservation(String date, String startTime, int roomNumber, int userId)
+	{
+		return executeTransaction(new Transaction<Reservation>() 
+		{
+			@SuppressWarnings("resource")
+			@Override
+			public Reservation execute(Connection conn) throws SQLException 
+			{
+				PreparedStatement stmt = null;
+				PreparedStatement stmt2 = null;
+				PreparedStatement stmt3 = null;
+				ResultSet resultSet = null;
+				
+				try 
+				{
+					stmt = conn.prepareStatement(
+							"select reservations.reservation_id "
+							+ "  from reservations "
+							+ "  where reservations.reservation_date = ? and reservations.start_time = ? and reservations.room = ?"		
+					);
+					
+					//set variables equal to question marks and execute the query
+					stmt.setString(1, date);
+					stmt.setString(2, startTime);
+					stmt.setInt(3, roomNumber);
+					resultSet = stmt.executeQuery();
+					
+					
+					//if the user was already in the the table, run this block
+					if (resultSet.next())
+					{
+						System.out.println("Reservation already is taken");
+					}
+					//if the user was not in the books table, run this block
+					else
+					{
+						//create statement to insert new user into user's table
+						stmt3 = conn.prepareStatement(
+								"insert into reservations (user_id2, room, reservation_date, start_time)"
+								+ "  values (?, ?, ?, ?)"
+										
+						);
+						
+						//set ?'s equal to variables and execute update
+						stmt3.setInt(1, userId);
+						stmt3.setString(2, Integer.toString(roomNumber));
+						stmt3.setString(3, date);
+						stmt3.setString(4, startTime);
+						stmt3.executeUpdate();
+						System.out.println("Reservation added");
+						
+						//create new statement to get new user's id
+						stmt = conn.prepareStatement(
+								"select reservations.* "
+								+ "  from reservations "
+								+ "  where reservations.reservation_date = ? and reservations.start_time = ? and reservations.room = ?"		
+						);
+						
+						//set variables equal to question marks and set resultSet equal to user's id
+						stmt.setString(1, date);
+						stmt.setString(2, startTime);
+						stmt.setInt(3, roomNumber);
+						resultSet = stmt.executeQuery();
+						System.out.println("Reservation Retrieved");
+						
+					}
+					Reservation result = new Reservation();
+					
+					
+					while (resultSet.next()) 
+					{	
+						// create new User object
+						// retrieve attributes from resultSet starting with index 1
+						Reservation reservation = new Reservation();
+						loadReservation(reservation, resultSet, 1);
+
+						result = reservation;
+					}
+				
+					return result;
+				} 
+				finally 
+				{
+					DBUtil.closeQuietly(resultSet);
+					DBUtil.closeQuietly(stmt);
+					DBUtil.closeQuietly(stmt3);
+				}
+			}
+		});
+		
+	}
 	
 	
 }

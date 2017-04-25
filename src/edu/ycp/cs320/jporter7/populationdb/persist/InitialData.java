@@ -28,8 +28,10 @@ public class InitialData {
 				Iterator<String> i = tuple.iterator();
 				User user = new User();
 				UserController controller = new UserController(user);
+				user.setDbId(userId);
 				controller.createUser(i.next(), i.next(), i.next(), i.next(), i.next(), Integer.parseInt(i.next()));
 				userList.add(user);
+				userId++;
 			}
 			return userList;
 		} finally {

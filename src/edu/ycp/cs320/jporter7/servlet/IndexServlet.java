@@ -36,6 +36,8 @@ public class IndexServlet extends HttpServlet {
 		
 		Object username = req.getSession().getAttribute("username");
 		Object password = req.getSession().getAttribute("password");
+		Object user = req.getSession().getAttribute("user");
+		User user2 = (User)user;
 		//HttpSession session= req.getSession(false); 
 		if (username == null || username.equals("") || password == null || password.equals(""))
 		{

@@ -3,6 +3,7 @@ package edu.ycp.cs320.jporter7.populationdb.persist;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ycp.cs320.jporter7.model.Reservation;
 import edu.ycp.cs320.jporter7.model.User;
 import edu.ycp.cs320.jporter7.populationdb.model.Author;
 import edu.ycp.cs320.jporter7.populationdb.model.Book;
@@ -17,4 +18,6 @@ public interface IDatabase
 	public User insertUser(String password, String username, String email, String firstName, String lastName, String id);
 	public ArrayList<User> getActiveUsers();
 	public User insertActiveUser(String dbId, String roomNumber);
+	public Reservation insertReservation(String date, String startTime, int roomNumber, int userId);
+	public ArrayList<Reservation> getReservationsForRoom(String room);
 }

@@ -3,14 +3,21 @@ package edu.ycp.cs320.jporter7.model;
 public class Reservation 
 {
 	private String date, startTime, endTime;
-	private User user;
+	private int userId, reservationId, roomNumber;
 	
-	public Reservation(String date, String startTime, String endTime, User user)
+	public Reservation()
 	{
+		
+	}
+	
+	public Reservation(String date, String startTime, int userId, int roomNumber)
+	{
+		this.reservationId = reservationId;
 		this.date = date;
 		this.startTime = startTime;
-		this.endTime = endTime;
-		this.user = user;
+		//this.endTime = endTime;
+		this.userId = userId;
+		this.roomNumber = roomNumber;
 	}
 	
 	public void setDate(String date)
@@ -23,14 +30,19 @@ public class Reservation
 		this.startTime = startTime;
 	}
 	
-	public void setUser(User user)
+	public void setUserId(int userId)
 	{
-		this.user = user;
+		this.userId = userId;
 	}
 	
-	public void setEndTime(String endTime)
+	public void setReservationId(int reservationId)
 	{
-		this.endTime = endTime;
+		this.reservationId = reservationId;
+	}
+	
+	public void setRoomNumber(int roomNumber)
+	{
+		this.roomNumber = roomNumber;
 	}
 	
 	public String getDate()
@@ -43,13 +55,13 @@ public class Reservation
 		return startTime;
 	}
 	
-	public String getEndTime()
+	public int getReservationId()
 	{
-		return endTime;
+		return reservationId;
 	}
 	
-	public User getUser()
+	public int getUserId()
 	{
-		return user;
+		return userId;
 	}
 }

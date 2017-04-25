@@ -53,6 +53,7 @@ public class LoginServlet extends HttpServlet
 		String errorMessage = null;
 		String username = req.getParameter("username");
 		String password = req.getParameter("password");
+		User user = null;
 		boolean validCredentials = false;
 		
 		ArrayList<User> userList = db.getAllUsers();
@@ -71,6 +72,7 @@ public class LoginServlet extends HttpServlet
 				if (userList.get(i).getUserName().equals(username) && userList.get(i).getPassword().equals(password))
 				{
 					validCredentials = true;
+					user = userList.get(i);
 					System.out.println("valid credentials");
 				}
 			}
@@ -82,7 +84,7 @@ public class LoginServlet extends HttpServlet
 			
 		}
 		
-		
+		req.getSession().setAttribute("user", user);
 		if (req.getParameter("index") != null && validCredentials)
 		{
 			resp.sendRedirect(req.getContextPath() + "/index");

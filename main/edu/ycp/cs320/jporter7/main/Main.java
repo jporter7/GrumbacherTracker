@@ -12,6 +12,7 @@ import edu.ycp.cs320.jporter7.populationdb.persist.IDatabase;
 import edu.ycp.cs320.jporter7.servlet.AccountCreationServlet;
 import edu.ycp.cs320.jporter7.servlet.IndexServlet;
 import edu.ycp.cs320.jporter7.servlet.LoginServlet;
+import edu.ycp.cs320.jporter7.servlet.ReservationsServlet;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -43,6 +44,7 @@ public class Main {
         handler.addServlet(LoginServlet.class, "/login/*");
         handler.addServlet(AccountCreationServlet.class, "/accountCreation/*");
         handler.addServlet(IndexServlet.class, "/index/*");
+        handler.addServlet(ReservationsServlet.class, "/reservations/*");
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		Scanner keyboard = new Scanner(System.in);
 		while (keyboard.hasNextLine()) {

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import edu.ycp.cs320.jporter7.model.User;
+
 public class DanceRoomServlet extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
@@ -19,7 +21,9 @@ public class DanceRoomServlet extends HttpServlet
 		//req.getRequestDispatcher("/_view/multiplyNumbers.jsp").forward(req, resp);
 		Object username = req.getSession().getAttribute("username");
 		Object password = req.getSession().getAttribute("password");
-		HttpSession session= req.getSession(false); 
+		Object user = req.getSession().getAttribute("user");
+		User user2 = (User)user;
+		//HttpSession session= req.getSession(false); 
 		if (username == null || username.equals("") || password == null || password.equals(""))
 		{
 			System.out.println("Need to login");

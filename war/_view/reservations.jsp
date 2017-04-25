@@ -15,7 +15,7 @@
 			<table align="center">
 				<tr>
 					<td>
-                    <select id="reservations">
+                    <select id="reservations" name="time">
             		<option value="">Choose A Reservations</option>
             		<option value="830am">8:30am</option>
             		<option value="9am">9:00am</option>
@@ -30,13 +30,20 @@
         			</td>
 				</tr>
 
-					
 				<tr><td><input type="Submit" name="make reservation" value="Make Reservation"></td></tr>
+				
+				
+				
 			</table>
 		</form>
+
 		
-		<table>
-		
+		<table align="center">
+				<c:forEach items="${test.reservations}" var="reservation">
+    				<tr>      
+        				<td>${reservation.startTime}</td>
+    				</tr>
+				</c:forEach>
 		</table>
 		
 	</body>
