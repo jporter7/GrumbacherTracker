@@ -4,7 +4,7 @@
 
 <html>
 	<head>
-        <link rel="stylesheet" href="helloworld.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index_css.css" />
 		<title>Make A reservation</title>
     </head>
 

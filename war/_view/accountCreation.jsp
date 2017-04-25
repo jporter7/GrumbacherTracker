@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<title>Create an Account</title>
-		
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/css/index_css.css" />
 	</head>
 
 	<body>

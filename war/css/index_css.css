@@ -11,6 +11,19 @@ input[type=submit]
     cursor: pointer;
 }
 
+#reservations
+{
+	height: 25px;
+	align: center;
+	size: 4;
+}
+
+option
+{
+	text-align: center;
+	font-size: 14px;
+}
+
 h1
 {
 	text-decoration: underline;
@@ -24,4 +37,90 @@ h1
 .popNumbers
 {
 	text-align: center;
+}
+
+#totalBar 
+{
+    width: 0%;
+    height: 30px;
+    background-color: #399143;
+    text-align: center;
+    line-height: 30px;
+    color: white; 
+}
+
+#weightBar 
+{
+    width: 0%;
+    height: 30px;
+    background-color: #399143;
+    text-align: center;
+    line-height: 30px;
+    color: white; 
+}
+
+#racquetBar 
+{
+    width: 0%;
+    height: 30px;
+    background-color: #399143;
+    text-align: center;
+    line-height: 30px;
+    color: white; 
+}
+
+#poolBar 
+{
+    width: 0%;
+    height: 30px;
+    background-color: #399143;
+    text-align: center;
+    line-height: 30px;
+    color: white; 
+}
+
+#fieldBar 
+{
+    width: 0%;
+    height: 30px;
+    background-color: #399143;
+    text-align: center;
+    line-height: 30px;
+    color: white; 
+}
+
+#wolfBar 
+{
+    width: 0%;
+    height: 30px;
+    background-color: #399143;
+    text-align: center;
+    line-height: 30px;
+    color: white; 
+}
+
+#rockBar 
+{
+    width: 0%;
+    height: 30px;
+    background-color: #399143;
+    text-align: center;
+    line-height: 30px;
+    color: white; 
+}
+
+#danceBar 
+{
+    width: 0%;
+    height: 30px;
+    background-color: #399143;
+    text-align: center;
+    line-height: 30px;
+    color: white; 
+}
+
+.myProgress 
+{
+    width: 200%;
+    background-color: grey;
 }

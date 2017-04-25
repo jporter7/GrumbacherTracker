@@ -4,7 +4,7 @@
 
 <html>
 	<head>
-        <link rel="stylesheet" href="helloworld.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/index_css.css" />
 		<title>Make A reservation</title>
     </head>
 
@@ -14,7 +14,6 @@
 		<form action="${pageContext.servletContext.contextPath}/grumbacher" method="post">
 			<table>
 				<tr>
-					<p>Reservation Timetable will go here</p>
                     <td><textarea name="text" cols="25" rows="5"> Calendar Data filled throughout here</textarea></td>
 				</tr>
 

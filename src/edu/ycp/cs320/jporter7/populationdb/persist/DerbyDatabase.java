@@ -206,6 +206,7 @@ public class DerbyDatabase implements IDatabase
 			{
 				PreparedStatement stmt1 = null;
 				PreparedStatement stmt2 = null;
+				//PreparedStatement stmt3 = null;
 				
 				try 
 				{
@@ -233,6 +234,16 @@ public class DerbyDatabase implements IDatabase
 					);
 					stmt2.executeUpdate();
 					
+					/*stmt3 = conn.prepareStatement(
+							"create table reservations (" +
+							"	reservation_id integer primary key " +
+							"		generated always as identity (start with 1, increment by 1), " +
+							"	user_username integer constraint user_id references users, " +
+							"	room integer " +
+							")"
+					);
+					stmt3.executeUpdate();
+					*/
 					return true;
 				} 
 				finally 
