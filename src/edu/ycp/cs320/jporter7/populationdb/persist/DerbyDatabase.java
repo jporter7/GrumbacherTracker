@@ -236,9 +236,7 @@ public class DerbyDatabase implements IDatabase
 					
 					/*stmt3 = conn.prepareStatement(
 							"create table reservations (" +
-							"	reservation_id integer primary key " +
-							"		generated always as identity (start with 1, increment by 1), " +
-							"	user_username integer constraint user_id references users, " +
+							"	user_id integer constraint user_id references users, " +
 							"	room integer " +
 							")"
 					);
