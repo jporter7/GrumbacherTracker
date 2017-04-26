@@ -524,7 +524,7 @@ public class DerbyDatabase implements IDatabase
 		
 	}
 	
-	public ArrayList<Reservation> getReservationsForRoom(String room)
+	public ArrayList<Reservation> getReservationsForRoom(String room, String date)
 	{
 		//throw new UnsupportedOperationException();
 		//@Override
@@ -538,9 +538,10 @@ public class DerbyDatabase implements IDatabase
 					try
 					{
 						stmt = conn.prepareStatement("select * from reservations"
-								+ " where reservations.room = ?");
+								+ " where reservations.room = ? and reservations.reservation_date = ?");
 						
 						stmt.setString(1, room);
+						stmt.setString(2, date);
 						resultSet = stmt.executeQuery();
 						
 						ArrayList<Reservation> result = new ArrayList<Reservation>();
@@ -576,7 +577,113 @@ public class DerbyDatabase implements IDatabase
 		
 	}
 	
+	public User getUserFromReservationTime(String room, String time)
+	{
+		//throw new UnsupportedOperationException();
+		//@Override
+		return executeTransaction(new Transaction<User>()
+			{
+				@Override
+				public User execute(Connection conn) throws SQLException
+				{
+					PreparedStatement stmt = null;
+					ResultSet resultSet = null;
+					try
+					{
+						stmt = conn.prepareStatement("select users.* from users, reservations "
+								+ " where reservations.room = ? and reservations.start_time = ? and "
+								+ "users.user_id = reservations.user_id2");
+						
+						stmt.setString(1, room);
+						stmt.setString(2, time);
+						resultSet = stmt.executeQuery();
+						
+						User result = null;
+						
+						boolean success = false;
+						while (resultSet.next())
+						{
+							//create user and load the attributes of the user to 
+							//a new user instance
+							User user = new User();
+							loadUser(user, resultSet, 1);
+							
+							//add the user to the arraylist that will be returned
+							result = user;
+							success = true;
+						}
+						
+						if (!success) 
+						{
+							System.out.println("User's reservation was not found in the reservations table");
+						}
+						
+						return result;
+					}
+					finally
+					{
+						DBUtil.closeQuietly(resultSet);
+						DBUtil.closeQuietly(stmt);
+					}
+					
+			}
+		});
+		
+	}
 	
+	public User removeReservation(String room, String time)
+	{
+		//throw new UnsupportedOperationException();
+		//@Override
+		return executeTransaction(new Transaction<User>()
+			{
+				@Override
+				public User execute(Connection conn) throws SQLException
+				{
+					PreparedStatement stmt = null;
+					int resultSet = 0;
+					try
+					{
+						stmt = conn.prepareStatement("delete from reservations "
+								+ " where reservations.room = ? and reservations.start_time = ? "
+								);
+						
+						stmt.setString(1, room);
+						stmt.setString(2, time);
+						resultSet = stmt.executeUpdate();
+						
+						User result = new User();
+						
+						boolean success = false;
+						if (resultSet == 0)
+						{
+							//create user and load the attributes of the user to 
+							//a new user instance
+							//User user = new User();
+							//loadUser(user, resultSet, 1);
+							
+							//add the user to the arraylist that will be returned
+							//result = user;
+							//success = true;
+						}
+						
+						if (!success) 
+						{
+							System.out.println("User's reservation was not found in the reservations table");
+						}
+						
+						return result;
+					}
+					finally
+					{
+						//DBUtil.closeQuietly(resultSet);
+						DBUtil.closeQuietly(stmt);
+					}
+					
+			}
+		});
+		
+	}
 	
 	public List<Pair<User, Book>> insertBook(String firstName, String lastName, String title, String isbn, String published)
 	{
@@ -912,7 +1019,7 @@ public class DerbyDatabase implements IDatabase
 				try 
 				{
 					stmt = conn.prepareStatement(
-							"select reservations.reservation_id "
+							"select reservations.start_time "
 							+ "  from reservations "
 							+ "  where reservations.reservation_date = ? and reservations.start_time = ? and reservations.room = ?"		
 					);

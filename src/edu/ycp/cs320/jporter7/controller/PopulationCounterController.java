@@ -15,15 +15,6 @@ public class PopulationCounterController
 	{
 		this.model = model;
 		this.db = db;
-		/*model.setDanceRoom(0);
-		model.setFieldHouse(0);
-		model.setPool(0);
-		model.setPopTotal(0);
-		model.setRacquet(0);
-		model.setRockWall(0);
-		model.setWeightRoom(0);
-		model.setWolfBasketball(0);
-		model.setWrestlingRoom(0);*/
 	}
 	
 	public void setModel()

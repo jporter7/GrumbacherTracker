@@ -17,15 +17,15 @@
 					<td>
                     <select id="reservations" name="time">
             		<option value="">Choose A Reservations</option>
-            		<option value="830am">8:30am</option>
-            		<option value="9am">9:00am</option>
-            		<option value="930am">9:30am</option>
-            		<option value="10am">10:00am</option>
-            		<option value="1030am">10:30am</option>
-            		<option value="11am">11:00am</option>
-            		<option value="1130am">11:30am</option>
-            		<option value="12pm">12:00pm</option>
-            		<option value="1230pm">12:30pm</option>
+            		<option value="8:30am">8:30am</option>
+            		<option value="9:00am">9:00am</option>
+            		<option value="9:30am">9:30am</option>
+            		<option value="10:00am">10:00am</option>
+            		<option value="10:30am">10:30am</option>
+            		<option value="11:00am">11:00am</option>
+            		<option value="11:30am">11:30am</option>
+            		<option value="12:00pm">12:00pm</option>
+            		<option value="12:30pm">12:30pm</option>
         			</select>
         			</td>
 				</tr>
@@ -38,12 +38,28 @@
 		</form>
 
 		
-		<table align="center">
+		<table class="reserved" align="left">
+				<tr>
+					<th>Reserved Time</th>
+				</tr>
+				
 				<c:forEach items="${test.reservations}" var="reservation">
-    				<tr>      
+    				<tr class="reservedTimes">      
         				<td>${reservation.startTime}</td>
     				</tr>
 				</c:forEach>
+		</table>
+		<table class="reserved" align="right">
+			<tr>
+				<th>Reserved By</th>
+			</tr>
+			
+			<c:forEach items="${test.usersWithReservations}" var="user">
+    				<tr class="reservedTimes">      
+        				<td>${user.isFaculty}</td>
+    				</tr>
+			</c:forEach>
+				
 		</table>
 		
 	</body>

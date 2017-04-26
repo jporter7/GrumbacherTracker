@@ -19,5 +19,7 @@ public interface IDatabase
 	public ArrayList<User> getActiveUsers();
 	public User insertActiveUser(String dbId, String roomNumber);
 	public Reservation insertReservation(String date, String startTime, int roomNumber, int userId);
-	public ArrayList<Reservation> getReservationsForRoom(String room);
+	public ArrayList<Reservation> getReservationsForRoom(String room, String date);
+	public User getUserFromReservationTime(String room, String time);
+	public User removeReservation(String room, String time);
 }

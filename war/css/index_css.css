@@ -18,6 +18,20 @@ input[type=submit]
 	size: 4;
 }
 
+.reserved
+{
+	border-collapse: collapse;
+    width: 50%;
+}
+
+th
+{
+	padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 30px;
+}
+
 option
 {
 	text-align: center;
@@ -124,3 +138,13 @@ h1
     width: 200%;
     background-color: grey;
 }
+
+.reservedTimes
+{
+	text-align: center;
+	padding: 8px;
+    border-bottom: 1px solid #ddd;
+    font-size: 20px;
+}
+
+
