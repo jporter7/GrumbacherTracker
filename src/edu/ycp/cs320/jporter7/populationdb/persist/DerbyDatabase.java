@@ -579,7 +579,6 @@ public class DerbyDatabase implements IDatabase
 	
 	public User getUserFromReservationTime(String room, String time)
 	{
-		//throw new UnsupportedOperationException();
 		//@Override
 		return executeTransaction(new Transaction<User>()
 			{
@@ -670,6 +669,59 @@ public class DerbyDatabase implements IDatabase
 						if (!success) 
 						{
 							System.out.println("User's reservation was not found in the reservations table");
+						}
+						
+						return result;
+					}
+					finally
+					{
+						//DBUtil.closeQuietly(resultSet);
+						DBUtil.closeQuietly(stmt);
+					}
+					
+			}
+		});
+		
+	}
+	
+	public User removeActiveUser(String dbId)
+	{
+		//throw new UnsupportedOperationException();
+		//@Override
+		return executeTransaction(new Transaction<User>()
+			{
+				@Override
+				public User execute(Connection conn) throws SQLException
+				{
+					PreparedStatement stmt = null;
+					int resultSet = 0;
+					try
+					{
+						stmt = conn.prepareStatement("delete from active "
+								+ " where active.user_id = ? "
+								);
+						
+						stmt.setString(1, dbId);
+						resultSet = stmt.executeUpdate();
+						
+						User result = new User();
+						
+						boolean success = false;
+						if (resultSet == 0)
+						{
+							//create user and load the attributes of the user to 
+							//a new user instance
+							//User user = new User();
+							//loadUser(user, resultSet, 1);
+							
+							//add the user to the arraylist that will be returned
+							//result = user;
+							//success = true;
+						}
+						
+						if (!success) 
+						{
+							System.out.println("User was removed from active table");
 						}
 						
 						return result;

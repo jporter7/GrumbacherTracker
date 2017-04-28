@@ -16,7 +16,7 @@
 		<form action="${pageContext.servletContext.contextPath}/index" method="post">
 			<table align="center">
 				<tr>
-					<td><input type="Submit" name="Grumbacher" value="Grumbacher"></td>
+					<td><input type="Submit" name="TotalPopulation" value="Total Population"></td>
 					<td>${model.popTotal}</td>
 					<td><div class="myProgress"><div id="totalBar"><p id="percent"></p></div></div></td>
 					

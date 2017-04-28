@@ -22,4 +22,5 @@ public interface IDatabase
 	public ArrayList<Reservation> getReservationsForRoom(String room, String date);
 	public User getUserFromReservationTime(String room, String time);
 	public User removeReservation(String room, String time);
+	public User removeActiveUser(String dbId);
 }

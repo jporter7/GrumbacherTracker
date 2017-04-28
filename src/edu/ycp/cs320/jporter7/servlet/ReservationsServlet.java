@@ -24,20 +24,23 @@ public class ReservationsServlet extends HttpServlet {
 	private Calendar date;
 	private String today;
 	private User userWithReservation = null;
+	private Object user;
 	
-	@Override
-    public void init() throws ServletException
+	//@Override
+    public void init(HttpServletRequest req) throws ServletException
     {
         this.db = (IDatabase)getServletContext().getAttribute("database");
         this.date = Calendar.getInstance();
         this.today = Integer.toString(date.get(Calendar.MONTH) + 1) + "/" + Integer.toString(date.get(Calendar.DAY_OF_MONTH)) 
 		+ "/" + Integer.toString(date.get(Calendar.YEAR));
+        user = req.getSession().getAttribute("user");
     }
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException 
 	{
+		this.init(req);
 		ArrayList<Reservation> test2 = new ArrayList<Reservation>();
 		ArrayList<User> users = new ArrayList<User>();
 		//users = db.getUserFromReservationTime(room, time);
@@ -107,175 +110,107 @@ public class ReservationsServlet extends HttpServlet {
 			System.out.println("checking which reservation was taken");
 			if(req.getParameter("time").equals("8:30am"))
 			{
-				Object user = req.getSession().getAttribute("user");
-				User user2 = (User)user;
-				//System.out.println(user2.getId());
-				if (user2.getId() == 902000000)
-				{
-					user2.setIsFaculty(true);
-				}
-				
-				Reservation reservation = new Reservation(today, "8:30am", user2.getDbId(), 25);
-				userWithReservation = null;
-				userWithReservation = db.getUserFromReservationTime("25", "8:30am");
-				//System.out.println("current user is faculty: " + user2.getIsFaculty());
-				//System.out.println(userWithReservation.getIsFaculty());
-				if(user2.getIsFaculty() && userWithReservation != null)
-				{
-					if (userWithReservation.getId() == 902000000)
-					{
-						userWithReservation.setIsFaculty(true);
-					}
-					if (userWithReservation.getIsFaculty() == false)
-					{
-						db.removeReservation("25", "8:30am");
-						db.insertReservation(reservation.getDate(), reservation.getStartTime(), 25, user2.getDbId());
-						System.out.println("Reservation overwritten");
-					}
-					else
-					{
-						System.out.println("Reservation is for another faculty member");
-					}
-				}
-				else if (userWithReservation == null)
-				{
-					db.insertReservation(reservation.getDate(), reservation.getStartTime(), 25, user2.getDbId());
-					System.out.println("Reservation created");
-				}
-				else
-				{
-					System.out.println("Reservation can't be overwritten");
-				}
-				
-				
+				this.makeReservationForTime("8:30am");
 			}
 			else if (req.getParameter("time").equals("9:00am"))
 			{
-				Object user = req.getSession().getAttribute("user");
-				User user2 = (User)user;
-				//System.out.println(user2.getId());
-				if (user2.getId() == 902000000)
-				{
-					user2.setIsFaculty(true);
-				}
-				
-				Reservation reservation = new Reservation(today, "9:00am", user2.getDbId(), 25);
-				userWithReservation = null;
-				userWithReservation = db.getUserFromReservationTime("25", "9:00am");
-				//System.out.println("current user is faculty: " + user2.getIsFaculty());
-				//System.out.println(userWithReservation.getIsFaculty());
-				if(user2.getIsFaculty() && userWithReservation != null)
-				{
-					if (userWithReservation.getId() == 902000000)
-					{
-						userWithReservation.setIsFaculty(true);
-					}
-					if (userWithReservation.getIsFaculty() == false)
-					{
-						db.removeReservation("25", "9:00am");
-						db.insertReservation(reservation.getDate(), reservation.getStartTime(), 25, user2.getDbId());
-						System.out.println("Reservation overwritten");
-					}
-					else
-					{
-						System.out.println("Reservation is for another faculty member");
-					}
-				}
-				else if (userWithReservation == null)
-				{
-					db.insertReservation(reservation.getDate(), reservation.getStartTime(), 25, user2.getDbId());
-					System.out.println("Reservation created");
-				}
-				else
-				{
-					System.out.println("Reservation can't be overwritten");
-				}
-				
+				this.makeReservationForTime("9:00am");
 			}
 			else if (req.getParameter("time").equals("9:30am"))
 			{
-				Object user = req.getSession().getAttribute("user");
-				User user2 = (User)user;
-				//System.out.println(user2.getId());
-				if (user2.getId() == 902000000)
-				{
-					user2.setIsFaculty(true);
-				}
-				
-				Reservation reservation = new Reservation(today, "9:30am", user2.getDbId(), 25);
-				userWithReservation = null;
-				userWithReservation = db.getUserFromReservationTime("25", "9:30am");
-				
-				if(user2.getIsFaculty() && userWithReservation != null)
-				{
-					if (userWithReservation.getId() == 902000000)
-					{
-						userWithReservation.setIsFaculty(true);
-					}
-					if (userWithReservation.getIsFaculty() == false)
-					{
-						db.removeReservation("25", "9:30am");
-						db.insertReservation(reservation.getDate(), reservation.getStartTime(), 25, user2.getDbId());
-						System.out.println("Reservation overwritten");
-					}
-					else
-					{
-						System.out.println("Reservation is for another faculty member");
-					}
-				}
-				else if (userWithReservation == null)
-				{
-					db.insertReservation(reservation.getDate(), reservation.getStartTime(), 25, user2.getDbId());
-					System.out.println("Reservation created");
-				}
-				else
-				{
-					System.out.println("Reservation can't be overwritten");
-				}
-				
+				this.makeReservationForTime("9:30am");
 			}
 			else if (req.getParameter("time").equals("10:00am"))
 			{
-				Object user = req.getSession().getAttribute("user");
-				User user2 = (User)user;
-				//System.out.println(user2.getId());
-				if (user2.getId() == 902000000)
-				{
-					user2.setIsFaculty(true);
-				}
-				
-				Reservation reservation = new Reservation(today, "10:00am", user2.getDbId(), 25);
-				userWithReservation = null;
-				userWithReservation = db.getUserFromReservationTime("25", "10:00am");
-				//System.out.println("current user is faculty: " + user2.getIsFaculty());
-				//System.out.println(userWithReservation.getIsFaculty());
-				if(user2.getIsFaculty() && userWithReservation != null)
-				{
-					if (userWithReservation.getId() == 902000000)
-					{
-						userWithReservation.setIsFaculty(true);
-					}
-					if (userWithReservation.getIsFaculty() == false)
-					{
-						db.removeReservation("25", "10:00am");
-						db.insertReservation(reservation.getDate(), reservation.getStartTime(), 25, user2.getDbId());
-						System.out.println("Reservation overwritten");
-					}
-					else
-					{
-						System.out.println("Reservation is for another faculty member");
-					}
-				}
-				else if (userWithReservation == null)
-				{
-					db.insertReservation(reservation.getDate(), reservation.getStartTime(), 25, user2.getDbId());
-					System.out.println("Reservation created");
-				}
-				else
-				{
-					System.out.println("Reservation can't be overwritten");
-				}
-				
+				this.makeReservationForTime("10:00am");
+			}
+			else if (req.getParameter("time").equals("10:30am"))
+			{
+				this.makeReservationForTime("10:30am");
+			}
+			else if (req.getParameter("time").equals("11:00am"))
+			{
+				this.makeReservationForTime("11:00am");
+			}
+			else if (req.getParameter("time").equals("11:30am"))
+			{
+				this.makeReservationForTime("11:30am");
+			}
+			else if (req.getParameter("time").equals("12:00pm"))
+			{
+				this.makeReservationForTime("12:00pm");
+			}
+			else if (req.getParameter("time").equals("12:30pm"))
+			{
+				this.makeReservationForTime("12:30pm");
+			}
+			else if (req.getParameter("time").equals("1:00pm"))
+			{
+				this.makeReservationForTime("1:00pm");
+			}
+			else if (req.getParameter("time").equals("1:30pm"))
+			{
+				this.makeReservationForTime("1:30pm");
+			}
+			else if (req.getParameter("time").equals("2:00pm"))
+			{
+				this.makeReservationForTime("2:30pm");
+			}
+			else if (req.getParameter("time").equals("3:00pm"))
+			{
+				this.makeReservationForTime("3:00pm");
+			}
+			else if (req.getParameter("time").equals("3:30pm"))
+			{
+				this.makeReservationForTime("3:30pm");
+			}
+			else if (req.getParameter("time").equals("4:00pm"))
+			{
+				this.makeReservationForTime("4:00pm");
+			}
+			else if (req.getParameter("time").equals("4:30pm"))
+			{
+				this.makeReservationForTime("4:30pm");
+			}
+			else if (req.getParameter("time").equals("5:00pm"))
+			{
+				this.makeReservationForTime("5:00pm");
+			}
+			else if (req.getParameter("time").equals("5:30pm"))
+			{
+				this.makeReservationForTime("5:30pm");
+			}
+			else if (req.getParameter("time").equals("6:00pm"))
+			{
+				this.makeReservationForTime("6:00pm");
+			}
+			else if (req.getParameter("time").equals("6:30pm"))
+			{
+				this.makeReservationForTime("6:30pm");
+			}
+			else if (req.getParameter("time").equals("7:00pm"))
+			{
+				this.makeReservationForTime("7:00pm");
+			}
+			else if (req.getParameter("time").equals("7:30pm"))
+			{
+				this.makeReservationForTime("7:30pm");
+			}
+			else if (req.getParameter("time").equals("8:00pm"))
+			{
+				this.makeReservationForTime("8:00pm");
+			}
+			else if (req.getParameter("time").equals("8:30pm"))
+			{
+				this.makeReservationForTime("8:30pm");
+			}
+			else if (req.getParameter("time").equals("9:00pm"))
+			{
+				this.makeReservationForTime("9:00pm");
+			}
+			else if (req.getParameter("time").equals("9:30pm"))
+			{
+				this.makeReservationForTime("9:30pm");
 			}
 		} 
 		catch (NumberFormatException e) 
@@ -288,16 +223,48 @@ public class ReservationsServlet extends HttpServlet {
 		req.getRequestDispatcher("/_view/reservations.jsp").forward(req, resp);
 	}
 
-	private String getDateForReservations() 
+	
+	public void makeReservationForTime(String time)
 	{
-		String date = null;
-		ArrayList<Reservation> reservations = new ArrayList<Reservation>();
-		reservations = db.getReservationsForRoom("25", today);
-		for (Reservation r : reservations)
+		//Object user = req.getSession().getAttribute("user");
+		User user2 = (User)user;
+		//System.out.println(user2.getId());
+		if (user2.getId() == 902000000)
 		{
-			date = r.getDate();
+			user2.setIsFaculty(true);
 		}
 		
-		return date;
+		Reservation reservation = new Reservation(today, time, user2.getDbId(), 25);
+		userWithReservation = null;
+		userWithReservation = db.getUserFromReservationTime("25", time);
+		//System.out.println("current user is faculty: " + user2.getIsFaculty());
+		//System.out.println(userWithReservation.getIsFaculty());
+		if(user2.getIsFaculty() && userWithReservation != null)
+		{
+			if (userWithReservation.getId() == 902000000)
+			{
+				userWithReservation.setIsFaculty(true);
+			}
+			if (userWithReservation.getIsFaculty() == false)
+			{
+				db.removeReservation("25", time);
+				db.insertReservation(reservation.getDate(), reservation.getStartTime(), 25, user2.getDbId());
+				System.out.println("Reservation overwritten");
+			}
+			else
+			{
+				System.out.println("Reservation is for another faculty member");
+			}
+		}
+		else if (userWithReservation == null)
+		{
+			db.insertReservation(reservation.getDate(), reservation.getStartTime(), 25, user2.getDbId());
+			System.out.println("Reservation created");
+		}
+		else
+		{
+			System.out.println("Reservation can't be overwritten");
+		}
 	}
+	
 }

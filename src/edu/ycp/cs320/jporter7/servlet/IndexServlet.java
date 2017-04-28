@@ -55,7 +55,7 @@ public class IndexServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws ServletException, IOException
 	{
-		if (req.getParameter("Grumbacher") != null)
+		if (req.getParameter("TotalPopulation") != null)
 		{
 			resp.sendRedirect(req.getContextPath() + "/index");
 		}
