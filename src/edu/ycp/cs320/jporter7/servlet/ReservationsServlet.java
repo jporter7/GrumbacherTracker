@@ -154,6 +154,10 @@ public class ReservationsServlet extends HttpServlet {
 			}
 			else if (req.getParameter("time").equals("2:00pm"))
 			{
+				this.makeReservationForTime("2:00pm");
+			}
+			else if (req.getParameter("time").equals("2:30pm"))
+			{
 				this.makeReservationForTime("2:30pm");
 			}
 			else if (req.getParameter("time").equals("3:00pm"))
@@ -226,45 +230,54 @@ public class ReservationsServlet extends HttpServlet {
 	
 	public void makeReservationForTime(String time)
 	{
-		//Object user = req.getSession().getAttribute("user");
 		User user2 = (User)user;
-		//System.out.println(user2.getId());
+		ArrayList<Reservation> reservationLimitCheck = new ArrayList<Reservation>();
+		reservationLimitCheck = db.getReservationsForUser(Integer.toString(user2.getDbId()));
+		System.out.println(reservationLimitCheck.size());
+		
 		if (user2.getId() == 902000000)
 		{
 			user2.setIsFaculty(true);
 		}
 		
-		Reservation reservation = new Reservation(today, time, user2.getDbId(), 25);
-		userWithReservation = null;
-		userWithReservation = db.getUserFromReservationTime("25", time);
-		//System.out.println("current user is faculty: " + user2.getIsFaculty());
-		//System.out.println(userWithReservation.getIsFaculty());
-		if(user2.getIsFaculty() && userWithReservation != null)
+		if (reservationLimitCheck.size() < 2)
 		{
-			if (userWithReservation.getId() == 902000000)
+			Reservation reservation = new Reservation(today, time, user2.getDbId(), 25);
+			userWithReservation = null;
+			userWithReservation = db.getUserFromReservationTime("25", time);
+			
+			if(user2.getIsFaculty() && userWithReservation != null)
 			{
-				userWithReservation.setIsFaculty(true);
+				if (userWithReservation.getId() == 902000000)
+				{
+					userWithReservation.setIsFaculty(true);
+				}
+				if (userWithReservation.getIsFaculty() == false)
+				{
+					db.removeReservation("25", time);
+					db.insertReservation(reservation.getDate(), reservation.getStartTime(), 25, user2.getDbId());
+					System.out.println("Reservation overwritten");
+				}
+				else
+				{
+					System.out.println("Reservation is for another faculty member");
+				}
 			}
-			if (userWithReservation.getIsFaculty() == false)
+			else if (userWithReservation == null)
 			{
-				db.removeReservation("25", time);
 				db.insertReservation(reservation.getDate(), reservation.getStartTime(), 25, user2.getDbId());
-				System.out.println("Reservation overwritten");
+				System.out.println("Reservation created");
 			}
 			else
 			{
-				System.out.println("Reservation is for another faculty member");
+				System.out.println("Reservation can't be overwritten");
 			}
-		}
-		else if (userWithReservation == null)
-		{
-			db.insertReservation(reservation.getDate(), reservation.getStartTime(), 25, user2.getDbId());
-			System.out.println("Reservation created");
 		}
 		else
 		{
-			System.out.println("Reservation can't be overwritten");
+			System.out.println("User has too many reservations");
 		}
 	}
+	
 	
 }

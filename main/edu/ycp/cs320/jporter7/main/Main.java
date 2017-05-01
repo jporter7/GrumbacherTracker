@@ -13,6 +13,7 @@ import edu.ycp.cs320.jporter7.servlet.AccountCreationServlet;
 import edu.ycp.cs320.jporter7.servlet.IndexServlet;
 import edu.ycp.cs320.jporter7.servlet.LoginServlet;
 import edu.ycp.cs320.jporter7.servlet.ReservationsServlet;
+import edu.ycp.cs320.jporter7.servlet.*;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -45,6 +46,11 @@ public class Main {
         handler.addServlet(AccountCreationServlet.class, "/accountCreation/*");
         handler.addServlet(IndexServlet.class, "/index/*");
         handler.addServlet(ReservationsServlet.class, "/reservations/*");
+        handler.addServlet(DanceRoomServlet.class, "/danceRoom/*");
+        handler.addServlet(PoolServlet.class, "/pool/*");
+        handler.addServlet(RacquetBallServlet.class, "/racquetBall/*");
+        handler.addServlet(RockWallServlet.class, "/rockWall/*");
+        handler.addServlet(WeightRoomServlet.class, "/weightRoom/*");
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		Scanner keyboard = new Scanner(System.in);
 		while (keyboard.hasNextLine()) {

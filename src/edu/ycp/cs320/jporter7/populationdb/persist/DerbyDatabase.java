@@ -630,6 +630,58 @@ public class DerbyDatabase implements IDatabase
 		
 	}
 	
+	public ArrayList<Reservation> getReservationsForUser(String dbId)
+	{
+		//@Override
+		return executeTransaction(new Transaction<ArrayList<Reservation>>()
+			{
+				@Override
+				public ArrayList<Reservation> execute(Connection conn) throws SQLException
+				{
+					PreparedStatement stmt = null;
+					ResultSet resultSet = null;
+					try
+					{
+						stmt = conn.prepareStatement("select reservations.* from reservations, users "
+								+ " where reservations.user_id2 = ? and "
+								+ " users.user_id = reservations.user_id2");
+						
+						stmt.setString(1, dbId);
+						resultSet = stmt.executeQuery();
+						
+						ArrayList<Reservation> results = new ArrayList<Reservation>();
+						
+						boolean success = false;
+						while (resultSet.next())
+						{
+							//create user and load the attributes of the user to 
+							//a new user instance
+							Reservation reservation = new Reservation();
+							loadReservation(reservation, resultSet, 1);
+							
+							//add the user to the arraylist that will be returned
+							results.add(reservation);
+							success = true;
+						}
+						
+						if (!success) 
+						{
+							System.out.println("User's reservations were not found in the reservations table");
+						}
+						
+						return results;
+					}
+					finally
+					{
+						DBUtil.closeQuietly(resultSet);
+						DBUtil.closeQuietly(stmt);
+					}
+					
+			}
+		});
+		
+	}
+	
 	public User removeReservation(String room, String time)
 	{
 		//throw new UnsupportedOperationException();

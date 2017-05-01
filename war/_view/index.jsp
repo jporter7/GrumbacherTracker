@@ -13,8 +13,16 @@
 	<body>
 		<h1>Populations</h1>
 		
+		
 		<form action="${pageContext.servletContext.contextPath}/index" method="post">
+			<label class="logout">
+		  		<input id="logout" name="logout" type="submit" value="Log Out">
+		  	</label>
+			
 			<table align="center">
+				<tr>
+					<td><input type="Submit" name="Test Button" value="Simulate"></td>
+				</tr>
 				<tr>
 					<td><input type="Submit" name="TotalPopulation" value="Total Population"></td>
 					<td>${model.popTotal}</td>
