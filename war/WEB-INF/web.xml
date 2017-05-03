@@ -67,6 +67,11 @@
     <servlet-class>edu.ycp.cs320.jporter7.servlet.DanceRoomServlet</servlet-class>
   </servlet>
   
+  <servlet>
+    <servlet-name>UserProfileServlet</servlet-name>
+    <servlet-class>edu.ycp.cs320.jporter7.servlet.UserProfileServlet</servlet-class>
+  </servlet>
+  
   <!-- AJAX servlets. -->
   <servlet>
     <servlet-name>RacquetBallAjaxServlet</servlet-name>
@@ -151,6 +156,11 @@
   <servlet-mapping>
     <servlet-name>DanceRoomServlet</servlet-name>
     <url-pattern>/danceRoom</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>UserProfileServlet</servlet-name>
+    <url-pattern>/userProfile</url-pattern>
   </servlet-mapping>
   
   <!--  AJAX servlet mappings. -->

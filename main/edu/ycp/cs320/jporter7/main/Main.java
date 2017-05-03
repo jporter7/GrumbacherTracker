@@ -51,6 +51,7 @@ public class Main {
         handler.addServlet(RacquetBallServlet.class, "/racquetBall/*");
         handler.addServlet(RockWallServlet.class, "/rockWall/*");
         handler.addServlet(WeightRoomServlet.class, "/weightRoom/*");
+        handler.addServlet(UserProfileServlet.class, "/userProfile/*");
 		///////////////////////////////////////////////////////////////////////////////////////////////////////
 		Scanner keyboard = new Scanner(System.in);
 		while (keyboard.hasNextLine()) {

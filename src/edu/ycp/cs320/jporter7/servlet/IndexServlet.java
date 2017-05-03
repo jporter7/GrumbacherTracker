@@ -41,11 +41,6 @@ public class IndexServlet extends HttpServlet {
 		popController.setModel();
 		req.setAttribute("model", model);
 		
-		/////////////////////////////////////////
-		
-		
-		
-		/////////////////////////////////////////
 		Object username = req.getSession().getAttribute("username");
 		Object password = req.getSession().getAttribute("password");
 		Object user = req.getSession().getAttribute("user");

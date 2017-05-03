@@ -64,4 +64,9 @@ public class Reservation
 	{
 		return userId;
 	}
+	
+	public int getRoomNumber()
+	{
+		return roomNumber;
+	}
 }
