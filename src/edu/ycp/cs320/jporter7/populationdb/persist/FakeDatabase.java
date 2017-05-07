@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.ycp.cs320.jporter7.controller.UserController;
+import edu.ycp.cs320.jporter7.model.Reservation;
 import edu.ycp.cs320.jporter7.model.User;
 //import edu.ycp.cs320.jporter7.model.User;
 import edu.ycp.cs320.jporter7.populationdb.model.Book;
@@ -155,6 +156,60 @@ public class FakeDatabase implements IDatabase {
 
 	@Override
 	public ArrayList<User> getActiveUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User insertActiveUser(String dbId, String roomNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Reservation insertReservation(String date, String startTime, int roomNumber, int userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Reservation> getReservationsForRoom(String room, String date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User getUserFromReservationTime(String room, String time) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Reservation> getReservationsForUser(String dbId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Reservation> getReservationsForUserAndDate(String dbId, String date) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User removeReservation(String room, String time) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User removeActiveUser(String dbId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<User> getActiveUsersInRoom(String room) {
 		// TODO Auto-generated method stub
 		return null;
 	}

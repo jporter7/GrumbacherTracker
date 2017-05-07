@@ -1,5 +1,8 @@
 package edu.ycp.cs320.jporter7.servlet.ajax;
 
+/*
+ * All of the ajax servlets were not used and were copied from the class lab
+ */
 import java.io.IOException;
 
 import javax.servlet.ServletException;

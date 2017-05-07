@@ -30,8 +30,6 @@ public class AccountCreationServlet extends HttpServlet
 			throws ServletException, IOException 
 	{
 		req.getRequestDispatcher("/_view/accountCreation.jsp").forward(req, resp);
-		
-		
 	}
 	
 	@Override
@@ -40,19 +38,19 @@ public class AccountCreationServlet extends HttpServlet
 	{
 		User user = null;
 		UserController controller;		
-		// Decode form parameters and dispatch to controller
 		String errorMessage = null;
 		
 		try 
 		{
+			//create a user and controller, set the user's fields using the parameters 
+			//that are input from the webpage (jsp)
 			user = new User();
 			controller = new UserController(user);
 			controller.createUser(req.getParameter("password"), req.getParameter("username"), req.getParameter("email"),
 					req.getParameter("firstName"), req.getParameter("lastName"), getIntFromParameter(req.getParameter("id")));
-			System.out.println("User Created in Servlet");
-			System.out.println(user.getPassword() + "," + user.getUserName() + "," +  user.getFullName() + "," +
-					user.getEmail() + "," + user.getId() + "," + user.getIsFaculty());
 			
+			//if all of the parameters meet certain criteria in the controller, create the user and insert
+			//user into the database
 			if (user.getPassword() != null && user.getUserName() != null && user.getFirstName() != null && user.getLastName() != null
 					&& user.getId() != 0)
 			{
@@ -72,11 +70,10 @@ public class AccountCreationServlet extends HttpServlet
 		{
 			errorMessage = "Invalid double";
 		}
+		
 		req.setAttribute("user", user);
 		req.setAttribute("errorMessage", errorMessage);
 		
-		// Forward to view to render the result HTML document
-		//req.getRequestDispatcher("/_view/accountCreation.jsp").forward(req, resp);
 	}
 
 	private Integer getIntFromParameter(String s) {

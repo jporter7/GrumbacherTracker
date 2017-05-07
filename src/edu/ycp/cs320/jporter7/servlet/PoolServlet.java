@@ -1,5 +1,8 @@
 package edu.ycp.cs320.jporter7.servlet;
 
+/*
+ * this class is identical to dance room servlet, except that the room number is changed
+ */
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -245,7 +248,7 @@ public class PoolServlet extends HttpServlet {
 	{
 		User user2 = (User)user;
 		ArrayList<Reservation> reservationLimitCheck = new ArrayList<Reservation>();
-		reservationLimitCheck = db.getReservationsForUser(Integer.toString(user2.getDbId()));
+		reservationLimitCheck = db.getReservationsForUserAndDate(Integer.toString(user2.getDbId()), today);
 		System.out.println(reservationLimitCheck.size());
 		
 		if (user2.getId() == 902000000)

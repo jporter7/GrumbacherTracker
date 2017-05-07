@@ -44,6 +44,7 @@ public class LoginServlet extends HttpServlet
 		throws ServletException, IOException
 	{	
 				
+		//redirect to the account creation page if it was clicked
 		if (req.getParameter("Create Account") != null)
 		{
 			resp.sendRedirect(req.getContextPath() + "/accountCreation");
@@ -56,8 +57,10 @@ public class LoginServlet extends HttpServlet
 		User user = null;
 		boolean validCredentials = false;
 		
+		//get all of the users rom the database
 		ArrayList<User> userList = db.getAllUsers();
 		
+		//check if the username and password entered are present in the database
 		if (username == null || username.equals("") || password == null || password.equals("")) 
 		{
 		    errorMessage = "Please specify username and password";
@@ -65,6 +68,7 @@ public class LoginServlet extends HttpServlet
 		} 
 		else 
 		{
+			//set session information if the user logged in correctly
 			req.getSession().setAttribute("username", username);
 			req.getSession().setAttribute("password", password);
 			for (int i = 0; i < userList.size(); i++)
@@ -84,6 +88,7 @@ public class LoginServlet extends HttpServlet
 			
 		}
 		
+		//redirect the user based on their login information
 		req.getSession().setAttribute("user", user);
 		if (req.getParameter("index") != null && validCredentials)
 		{

@@ -22,11 +22,13 @@ public class PopulationCounterController
 		int dance = 0, fieldHouse = 0, pool = 0, racquet = 0, rockWall = 0,
 				weightRoom = 0, wolfBasketball = 0, wrestlingRoom = 0;
 		
+		//Get list of users that are active in the database
 		ArrayList<User> activeUsers = new ArrayList<User>();
 		activeUsers = db.getActiveUsers();
 		for (int i = 0; i < activeUsers.size(); i++)
 		{
-			
+			//Place users into appropriate room based on the room number
+			//that they are in
 			if (activeUsers.get(i).getRoom() == 1)
 			{
 				dance++;

@@ -1,5 +1,9 @@
 package edu.ycp.cs320.jporter7.servlet;
 
+/*
+ * this class is almost identical to dance room servlet, except that the room number is changed.
+ * It is unused but was used to test creating a page for reservations
+ */
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;

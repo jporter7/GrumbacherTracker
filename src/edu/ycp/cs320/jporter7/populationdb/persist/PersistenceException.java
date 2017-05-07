@@ -1,5 +1,8 @@
 package edu.ycp.cs320.jporter7.populationdb.persist;
 
+/*
+ * copied from class lab
+ */
 public class PersistenceException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 

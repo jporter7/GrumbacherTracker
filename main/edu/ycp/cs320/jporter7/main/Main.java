@@ -34,13 +34,16 @@ public class Main {
 		// Wait for the user to type "quit"
 		System.out.println("Web server started, type quit to shut down");
 		////////////////////////Initialize database and pass to login servlet//////////////////////////////////
-		Scanner keyboard2 = new Scanner(System.in);
+		//Scanner keyboard2 = new Scanner(System.in);
 
 		// Create the default IDatabase instance
-		InitDatabase.init(keyboard2);
+		InitDatabase.init();
 		// get the DB instance and execute transaction
 		IDatabase db = DatabaseProvider.getInstance();
 		
+		//the information about how to do this in order to pass the instance of the database around
+		//was taken from stackoverflow at 
+		// http://stackoverflow.com/questions/39421686/jetty-pass-object-from-main-method-to-servlet
 		handler.setAttribute("database", db);
         handler.addServlet(LoginServlet.class, "/login/*");
         handler.addServlet(AccountCreationServlet.class, "/accountCreation/*");

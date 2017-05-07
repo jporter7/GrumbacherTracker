@@ -1,4 +1,9 @@
 package edu.ycp.cs320.jporter7.servlet;
+/*
+ * All servlets for rooms with reservations are fairly identical, except 
+ * that the room number for creating and checking reservations is different.
+ * This servlet has the comments for the pieces of logic that goes along with making a reservation.
+ */
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,11 +45,14 @@ public class DanceRoomServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException 
 	{
+		//initialize the servlet and get the reservations for this room and day
 		this.init(req);
 		ArrayList<Reservation> test2 = new ArrayList<Reservation>();
 		ArrayList<User> users = new ArrayList<User>();
-		//users = db.getUserFromReservationTime(room, time);
 		test2 = db.getReservationsForRoom("1", today);
+		
+		//add the users from the reservations that are currently made in for this room
+		//and set whether or not they are faculty members 
 		for (int i = 0; i < test2.size(); i++)
 		{
 			users.add(db.getUserFromReservationTime("1", test2.get(i).getStartTime()));
@@ -56,8 +64,10 @@ public class DanceRoomServlet extends HttpServlet {
 				users.get(i).setIsFaculty(true);
 			}
 		}
+		//create room object
 		Room test = new Room(test2, users);
 		
+		//check whether a user is logged in or not and redirect them accordingly
 		Object username = req.getSession().getAttribute("username");
 		Object password = req.getSession().getAttribute("password");
 		Object user = req.getSession().getAttribute("user");
@@ -81,12 +91,12 @@ public class DanceRoomServlet extends HttpServlet {
 			throws ServletException, IOException 
 	{
 		
-		// Decode form parameters and dispatch to controller
+		//Get all of the reservations for this room
 		ArrayList<Reservation> test2 = new ArrayList<Reservation>();
-		System.out.println(today);
 		test2 = db.getReservationsForRoom("1", today);
 		ArrayList<User> users = new ArrayList<User>();
 		
+		//set whether the users with reservations in this room are faculty or not
 		for (int i = 0; i < test2.size(); i++)
 		{
 			users.add(db.getUserFromReservationTime("1", test2.get(i).getStartTime()));
@@ -105,9 +115,8 @@ public class DanceRoomServlet extends HttpServlet {
 		try 
 		{
 			
-			//Date date = new Date();
-			//c.setTime(date);
-			
+			//check which reservation was taken and attempt to make a reservation
+			//for that time, but first check if the logout button has been clicked
 			System.out.println("checking which reservation was taken");
 			if (req.getParameter("logout") != null)
 			{
@@ -245,9 +254,10 @@ public class DanceRoomServlet extends HttpServlet {
 	{
 		User user2 = (User)user;
 		ArrayList<Reservation> reservationLimitCheck = new ArrayList<Reservation>();
-		reservationLimitCheck = db.getReservationsForUser(Integer.toString(user2.getDbId()));
+		reservationLimitCheck = db.getReservationsForUserAndDate(Integer.toString(user2.getDbId()), today);
 		System.out.println(reservationLimitCheck.size());
 		
+		//check if the user is faculty and also if they have less than 2 reservations
 		if (user2.getId() == 902000000)
 		{
 			user2.setIsFaculty(true);
@@ -259,6 +269,8 @@ public class DanceRoomServlet extends HttpServlet {
 			userWithReservation = null;
 			userWithReservation = db.getUserFromReservationTime("1", time);
 			
+			//check whether the user is faculty and if the user is not and make reservation based on this
+			//information
 			if(user2.getIsFaculty() && userWithReservation != null)
 			{
 				if (userWithReservation.getId() == 902000000)
@@ -267,6 +279,8 @@ public class DanceRoomServlet extends HttpServlet {
 				}
 				if (userWithReservation.getIsFaculty() == false)
 				{
+					//overwrite the reservation if the user is a faculty member and the 
+					//user with the reservation is a student
 					db.removeReservation("1", time);
 					db.insertReservation(reservation.getDate(), reservation.getStartTime(), 1, user2.getDbId());
 					System.out.println("Reservation overwritten");
@@ -278,6 +292,7 @@ public class DanceRoomServlet extends HttpServlet {
 			}
 			else if (userWithReservation == null)
 			{
+				//if there is no user with a reservation, then create one
 				db.insertReservation(reservation.getDate(), reservation.getStartTime(), 1, user2.getDbId());
 				System.out.println("Reservation created");
 			}

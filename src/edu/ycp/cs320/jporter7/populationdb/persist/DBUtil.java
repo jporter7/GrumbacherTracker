@@ -1,5 +1,8 @@
 package edu.ycp.cs320.jporter7.populationdb.persist;
 
+/*
+ * Copied from class lab
+ */
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;

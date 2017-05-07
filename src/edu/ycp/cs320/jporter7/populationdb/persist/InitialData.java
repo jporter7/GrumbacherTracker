@@ -1,5 +1,7 @@
 package edu.ycp.cs320.jporter7.populationdb.persist;
-
+/*
+ * copied from classs lab and modified
+ */
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,8 +9,6 @@ import java.util.List;
 
 import edu.ycp.cs320.jporter7.controller.UserController;
 import edu.ycp.cs320.jporter7.model.User;
-import edu.ycp.cs320.jporter7.populationdb.model.Author;
-import edu.ycp.cs320.jporter7.populationdb.model.Book;
 
 public class InitialData {
 	public static List<User> getUsers() throws IOException {

@@ -1,5 +1,8 @@
 package edu.ycp.cs320.jporter7.servlet;
 
+/*
+ * this servlet is unused
+ */
 import java.io.IOException;
 
 import javax.servlet.ServletException;

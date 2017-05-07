@@ -1,5 +1,9 @@
 package edu.ycp.cs320.jporter7.populationdb.persist;
 
+/*
+ * Copied from class lab
+ * 
+ */
 public class DatabaseProvider {
 	private static IDatabase theInstance;
 	

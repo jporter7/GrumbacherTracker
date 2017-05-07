@@ -1,5 +1,8 @@
 package edu.ycp.cs320.jporter7.populationdb.persist;
 
+/*
+ * copied from class lab
+ */
 import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.IOException;

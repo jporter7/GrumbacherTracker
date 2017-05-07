@@ -12,17 +12,18 @@
 	
 	<body>
 		<h1>Populations</h1>
-		
-		
 		<form action="${pageContext.servletContext.contextPath}/index" method="post">
-			<label class="logout">
-		  		<input id="logout" name="logout" type="submit" value="Log Out">
-		  	</label>
+			<table id="logout">	
+				<tr>
+					<td><input name="profile" type="submit" value="Your Profile"></td>
+					<td><input name="logout" type="submit" value="Log Out"></td>
+		  		</tr>
+	  		</table>
+		</form>
+		<form action="${pageContext.servletContext.contextPath}/index" method="post">
+			
 			
 			<table align="center">
-				<tr>
-					<td><input type="Submit" name="Test Button" value="Simulate"></td>
-				</tr>
 				<tr>
 					<td><input type="Submit" name="TotalPopulation" value="Total Population"></td>
 					<td>${model.popTotal}</td>

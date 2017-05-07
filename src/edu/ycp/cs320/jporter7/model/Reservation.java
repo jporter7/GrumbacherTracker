@@ -15,7 +15,6 @@ public class Reservation
 		this.reservationId = reservationId;
 		this.date = date;
 		this.startTime = startTime;
-		//this.endTime = endTime;
 		this.userId = userId;
 		this.roomNumber = roomNumber;
 	}

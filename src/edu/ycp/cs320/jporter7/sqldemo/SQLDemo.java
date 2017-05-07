@@ -1,5 +1,8 @@
 package edu.ycp.cs320.jporter7.sqldemo;
 
+/*
+ * This entire class was copied from the class lab
+ */
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;

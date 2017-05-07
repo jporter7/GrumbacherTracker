@@ -18,11 +18,20 @@ input[type=submit]
 	size: 4;
 }
 
-#logout{
+#logout
+{
+   position: fixed;
+   right: 10px;
+   top: 5px;
+   margin-left: 5px;
+   margin-right: 5px;
+}
 
-   position:fixed;
-   right:10px;
-   top:5px;
+#topLeft
+{
+   position: fixed;
+   left: 0px;
+   top: 5px;
 }
 
 .reserved
@@ -154,4 +163,9 @@ h1
     font-size: 20px;
 }
 
-
+#hoursTable
+{
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
